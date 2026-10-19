@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Achiev Móveis Planejados</title>
+<meta name="description" content="Móveis planejados no Rio Grande do Sul e em Santa Catarina. Solicite gratuitamente seu orçamento pelo WhatsApp.">
+<meta name="theme-color" content="#0C0A09">
+<script>if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("js-intro")</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: faixas de largura total alternando escuro / claro / laranja em gradiente, com réguas de arquitetura acompanhando o cursor. */
+:root {
+  --ink: #0C0A09;
+  --ink-2: #171310;
+  --ink-line: rgba(255, 244, 235, .12);
+  --paper: #FFFFFF;
+  --paper-2: #F5F1EC;
+  --paper-line: rgba(12, 10, 9, .12);
+  --o1: #FFB25C;
+  --o2: #FF7A1F;
+  --o3: #FF4F12;
+  --orange: #FF8A2A;
+  --grad: linear-gradient(120deg, var(--o1) 0%, var(--o2) 45%, var(--o3) 100%);
+  --muted-dark: rgba(255, 244, 235, .64);
+  --muted-light: rgba(12, 10, 9, .62);
+
+  --f-display: "Unbounded", "Arial Black", system-ui, sans-serif;
+  --f-body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "DM Mono", ui-monospace, Menlo, monospace;
+
+  --gutter: max(16px, env(safe-area-inset-left, 0px), 4vw);
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px), 4vw);
+  --max: 1240px;
+  --radius: 22px;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+html, body { overflow-x: clip; }
+body {
+  margin: 0; background: var(--ink); color: var(--paper);
+  font: 400 17px/1.6 var(--f-body); -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+[hidden] { display: none !important; }
+a { color: inherit; }
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3 { text-wrap: balance; }
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; border-radius: 6px; }
+::selection { background: var(--orange); color: var(--ink); }
+.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+section { padding-left: var(--gutter); padding-right: var(--gutter-r); }
+section > * { max-width: var(--max); margin-inline: auto; }
+.grad-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* ---------- botões ---------- */
+.btn {
+  --fg: var(--ink);
+  position: relative; display: inline-flex; align-items: center; gap: .6em;
+  padding: 1.05em 1.7em; border-radius: 999px; border: 0; cursor: pointer;
+  background: var(--grad); background-size: 160% 100%; background-position: 0 0; color: var(--fg);
+  font: 800 15px/1.1 var(--f-body); text-decoration: none; will-change: transform;
+  box-shadow: 0 14px 40px -12px rgba(255, 90, 20, .65);
+  transition: background-position .5s var(--ease), box-shadow .4s var(--ease);
+}
+.btn:hover { background-position: 100% 0; box-shadow: 0 18px 50px -10px rgba(255, 90, 20, .85); }
+.btn svg { width: 18px; height: 18px; flex: none; }
+.btn--ghost { background: transparent; color: var(--paper); box-shadow: inset 0 0 0 1.5px var(--ink-line); }
+.btn--ghost:hover { box-shadow: inset 0 0 0 1.5px var(--paper); }
+.btn--dark { background: var(--ink); color: var(--paper); box-shadow: 0 14px 40px -14px rgba(0,0,0,.6); }
+.btn--dark:hover { background: #26201B; }
+.btn--sm { padding: .8em 1.25em; font-size: 14px; }
+
+/* ---------- cursor com réguas ---------- */
+.rulers { display: none; }
+@media (pointer: fine) {
+  .rulers.on { display: block; }
+  .rule-x, .rule-y { position: fixed; z-index: 120; pointer-events: none; background: rgba(12,10,9,.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  .rule-x { left: 0; right: 0; top: 0; height: 18px; border-bottom: 1px solid rgba(255,138,42,.45);
+    background-image: repeating-linear-gradient(90deg, rgba(255,244,235,.5) 0 1px, transparent 1px 10px), repeating-linear-gradient(90deg, rgba(255,244,235,.8) 0 1px, transparent 1px 100px);
+    background-size: 100% 6px, 100% 11px; background-repeat: no-repeat; background-position: 0 100%, 0 100%; }
+  .rule-y { top: 0; bottom: 0; left: 0; width: 18px; border-right: 1px solid rgba(255,138,42,.45);
+    background-image: repeating-linear-gradient(180deg, rgba(255,244,235,.5) 0 1px, transparent 1px 10px), repeating-linear-gradient(180deg, rgba(255,244,235,.8) 0 1px, transparent 1px 100px);
+    background-size: 6px 100%, 11px 100%; background-repeat: no-repeat; background-position: 100% 0, 100% 0; }
+  .mark-x, .mark-y { position: fixed; z-index: 121; pointer-events: none; background: var(--orange); }
+  .mark-x { top: 0; left: 0; width: 2px; height: 18px; margin-left: -1px; }
+  .mark-y { left: 0; top: 0; height: 2px; width: 18px; margin-top: -1px; }
+  .line-x, .line-y { position: fixed; z-index: 119; pointer-events: none; }
+  .line-x { left: 0; right: 0; top: 0; height: 1px; background: linear-gradient(90deg, rgba(255,138,42,.55), rgba(255,138,42,.08) 40%, rgba(255,138,42,.08) 60%, rgba(255,138,42,.55)); }
+  .line-y { top: 0; bottom: 0; left: 0; width: 1px; background: linear-gradient(180deg, rgba(255,138,42,.55), rgba(255,138,42,.08) 40%, rgba(255,138,42,.08) 60%, rgba(255,138,42,.55)); }
+  .cur-dot { position: fixed; z-index: 122; left: 0; top: 0; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--grad); pointer-events: none; transition: width .35s var(--ease), height .35s var(--ease), margin .35s var(--ease); }
+  .cur-dot.big { width: 54px; height: 54px; margin: -27px 0 0 -27px; mix-blend-mode: difference; background: var(--orange); }
+  .cur-xy { position: fixed; z-index: 122; left: 0; top: 0; pointer-events: none; font: 500 10px/1 var(--f-mono); letter-spacing: .06em; color: var(--orange); padding: 5px 7px; border-radius: 6px; background: rgba(12,10,9,.8); white-space: nowrap; }
+  .rulers.on ~ * { cursor: none; }
+  .rulers.on ~ * a, .rulers.on ~ * button, .rulers.on ~ * label { cursor: none; }
+}
+
+/* ---------- topo ---------- */
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: calc(16px + env(safe-area-inset-top, 0px)) var(--gutter-r) 16px var(--gutter);
+  transition: background .4s var(--ease), transform .5s var(--ease);
+}
+.nav.is-solid { background: rgba(12, 10, 9, .78); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.nav.is-hidden { transform: translateY(-110%); }
+.brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img { height: 36px; width: auto; border-radius: 6px; }
+.brand__word { font: 800 17px/1 var(--f-display); letter-spacing: -.01em; }
+.brand__word small { display: block; font: 500 10px/1 var(--f-mono); letter-spacing: .14em; color: var(--muted-dark); margin-top: 5px; }
+.nav__links { display: flex; gap: 28px; }
+.nav__links a { font-size: 14px; font-weight: 600; text-decoration: none; color: var(--muted-dark); transition: color .2s; }
+.nav__links a:hover { color: var(--paper); }
+@media (max-width: 900px) { .nav__links { display: none; } }
+
+/* ---------- hero ---------- */
+.hero {
+  position: relative; overflow: hidden; isolation: isolate;
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 48px; align-items: center;
+  padding-top: clamp(120px, 17vh, 180px); padding-bottom: clamp(72px, 11vh, 120px);
+  background:
+    radial-gradient(55% 65% at 85% 35%, rgba(255, 79, 18, .32), transparent 70%),
+    radial-gradient(40% 50% at 5% 100%, rgba(255, 178, 92, .16), transparent 70%),
+    var(--ink);
+}
+.hero > * { max-width: none; margin: 0; }
+.hero__grid {
+  position: absolute; inset: 0; z-index: -2; opacity: .5;
+  background-image: linear-gradient(rgba(255,244,235,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,244,235,.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(70% 70% at 60% 40%, #000 30%, transparent 80%); mask-image: radial-gradient(70% 70% at 60% 40%, #000 30%, transparent 80%);
+}
+.hero__ring { position: absolute; z-index: -1; width: min(120vw, 1100px); height: min(120vw, 1100px); max-width: none; right: -30%; top: 50%; translate: 0 -50%; animation: spin 90s linear infinite; opacity: .9; }
+.hero__copy { display: grid; gap: 28px; justify-items: start; padding-left: max(0px, calc((100vw - var(--max)) / 2 - var(--gutter))); }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font: 500 12px/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted-dark);
+  padding: 9px 15px; border: 1px solid var(--ink-line); border-radius: 999px;
+}
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); animation: pulse 2s infinite; }
+.hero__title { font: 900 clamp(42px, 5.6vw, 92px)/.98 var(--f-display); letter-spacing: -.045em; }
+.hero__title .line { display: block; overflow: hidden; padding-bottom: .06em; }
+.hero__title .w { display: inline-block; }
+.hero__lead { max-width: 34em; font-size: clamp(17px, 1.35vw, 20px); color: var(--muted-dark); }
+.hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero__visual { position: relative; justify-self: center; width: min(460px, 86vw); aspect-ratio: 4 / 5; padding-right: max(0px, calc((100vw - var(--max)) / 2 - var(--gutter))); }
+.ph { position: absolute; inset: 0; border-radius: 26px; overflow: hidden; box-shadow: 0 40px 120px -20px rgba(255, 79, 18, .45); border: 1px solid rgba(255,244,235,.14); }
+.ph img { width: 100%; height: 100%; object-fit: cover; }
+.ph--back1 { transform: rotate(-9deg) translate(-14%, 4%) scale(.86); opacity: .7; }
+.ph--back2 { transform: rotate(7deg) translate(14%, 6%) scale(.84); opacity: .55; }
+.ph--main { transform: rotate(-2deg); }
+.dim { position: absolute; left: 6%; right: 6%; top: -34px; height: 20px; color: var(--orange); }
+.dim::before { content: ""; position: absolute; left: 0; right: 0; top: 10px; height: 1px; background: currentColor; }
+.dim::after { content: ""; position: absolute; inset: 4px 0; border-inline: 1px solid currentColor; }
+.dim span { position: absolute; left: 50%; top: 0; translate: -50% -60%; font: 500 11px/1 var(--f-mono); background: var(--ink); padding: 3px 8px; border-radius: 6px; }
+.float { position: absolute; padding: 11px 15px; border-radius: 14px; background: var(--paper); color: var(--ink); font: 800 13px/1 var(--f-body); box-shadow: 0 20px 40px -10px rgba(0,0,0,.5); white-space: nowrap; z-index: 2; }
+.float--1 { top: 16%; left: -14%; background: var(--grad); animation: bob 4s ease-in-out infinite; }
+.float--2 { bottom: 10%; right: -8%; animation: bob 5s ease-in-out -1.5s infinite; }
+@media (max-width: 960px) {
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 72px; }
+  .hero__copy, .hero__visual { padding: 0; }
+  .hero__visual { width: min(340px, 78vw); }
+  .float--1 { left: -6%; } .float--2 { right: -4%; }
+}
+
+/* ---------- faixa ---------- */
+.marquee { background: var(--grad); color: var(--ink); overflow: hidden; padding-block: 22px; transform: rotate(-1.5deg) scale(1.03); margin-block: -10px; position: relative; z-index: 2; }
+.marquee__track { display: flex; width: max-content; gap: 28px; align-items: center; animation: marquee 30s linear infinite; }
+.marquee span { font: 900 clamp(26px, 4vw, 50px)/1 var(--f-display); text-transform: uppercase; letter-spacing: -.02em; }
+.marquee i { font-style: normal; font-size: clamp(20px, 3vw, 36px); }
+
+/* ---------- manifesto ---------- */
+.manifesto { background: var(--paper); color: var(--ink); padding-block: clamp(110px, 15vw, 190px) clamp(70px, 9vw, 110px); }
+.manifesto__text { font: 800 clamp(28px, 4.4vw, 62px)/1.14 var(--f-display); letter-spacing: -.035em; max-width: 19em; }
+.manifesto__text .word { display: inline-block; white-space: pre; }
+
+/* ---------- cabeçalhos ---------- */
+.section-head { display: grid; gap: 16px; margin-bottom: clamp(32px, 4.5vw, 56px); }
+.kicker { font: 500 13px/1 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--o3); }
+.kicker--light { color: var(--orange); }
+.kicker--dark { color: var(--ink); }
+.h2 { font: 800 clamp(32px, 4.8vw, 70px)/1.02 var(--f-display); letter-spacing: -.04em; max-width: 15em; }
+
+/* ---------- projetos ---------- */
+.work { background: var(--paper); color: var(--ink); padding-block: 0 clamp(90px, 12vw, 150px); }
+.work__bar { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 28px; }
+.tabs { position: relative; display: inline-flex; padding: 6px; border-radius: 999px; background: var(--paper-2); max-width: 100%; overflow-x: auto; }
+.tab { position: relative; z-index: 1; border: 0; background: none; padding: 13px 22px; border-radius: 999px; font: 700 15px/1 var(--f-body); color: var(--muted-light); cursor: pointer; transition: color .3s; white-space: nowrap; }
+.tab.is-active { color: var(--paper); }
+.tabs__pill { position: absolute; z-index: 0; top: 6px; bottom: 6px; left: 6px; width: 0; border-radius: 999px; background: var(--ink); transition: left .45s var(--ease), width .45s var(--ease); }
+.work__count { font: 500 13px/1 var(--f-mono); color: var(--muted-light); }
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
+.proj { position: relative; margin: 0; border-radius: var(--radius); overflow: hidden; background: var(--paper-2); grid-column: span 4; aspect-ratio: 4 / 5; cursor: pointer; isolation: isolate; }
+.proj.is-wide { grid-column: span 8; aspect-ratio: 8 / 5; }
+.proj img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease), filter .6s; }
+.proj:hover img { transform: scale(1.06); }
+.proj::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(12,10,9,.75)); z-index: 0; }
+.proj figcaption { position: absolute; left: 18px; right: 18px; bottom: 16px; z-index: 1; color: var(--paper); display: grid; gap: 6px; }
+.proj figcaption span { font: 500 11px/1 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--o1); }
+.proj figcaption b { font: 700 17px/1.25 var(--f-display); letter-spacing: -.01em; }
+.proj .plus { position: absolute; top: 14px; right: 14px; z-index: 1; width: 42px; height: 42px; border-radius: 50%; background: var(--paper); color: var(--ink); display: grid; place-items: center; font-size: 22px; transform: scale(0) rotate(-90deg); transition: transform .5s var(--ease); }
+.proj:hover .plus { transform: none; }
+.proj.is-out { display: none; }
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .proj, .proj.is-wide { grid-column: span 1; aspect-ratio: 4 / 5; }
+  .proj figcaption b { font-size: 14px; }
+}
+
+/* lightbox */
+.lb { position: fixed; inset: 0; z-index: 130; background: rgba(12,10,9,.94); display: grid; place-items: center; padding: 24px; opacity: 0; visibility: hidden; transition: opacity .4s, visibility 0s .4s; }
+.lb.open { opacity: 1; visibility: visible; transition: opacity .4s; }
+.lb img { max-height: 84vh; max-height: 84svh; width: auto; border-radius: 18px; }
+.lb p { margin-top: 14px; text-align: center; color: var(--muted-dark); }
+.lb button { position: absolute; border: 0; cursor: pointer; width: 52px; height: 52px; border-radius: 50%; background: var(--paper); color: var(--ink); font-size: 22px; display: grid; place-items: center; }
+.lb .lb-x { top: calc(18px + env(safe-area-inset-top, 0px)); right: max(18px, env(safe-area-inset-right, 0px)); }
+.lb .lb-p { left: max(18px, env(safe-area-inset-left, 0px)); top: 50%; translate: 0 -50%; }
+.lb .lb-n { right: max(18px, env(safe-area-inset-right, 0px)); top: 50%; translate: 0 -50%; }
+
+/* ---------- montagem → entregue ---------- */
+.build { background: var(--ink); padding-block: clamp(90px, 12vw, 150px); position: relative; overflow: hidden; }
+.build::before { content: ""; position: absolute; inset: auto -20% -40% auto; width: 70vw; height: 70vw; background: radial-gradient(closest-side, rgba(255,79,18,.22), transparent); pointer-events: none; }
+.pairs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; position: relative; }
+.pair { position: relative; border-radius: var(--radius); overflow: hidden; aspect-ratio: 4 / 5; background: var(--ink-2); border: 1px solid var(--ink-line); }
+.pair img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.pair .after { position: absolute; inset: 0; clip-path: inset(0 0 0 100%); transition: clip-path 1.1s var(--ease); }
+.pair.done .after { clip-path: inset(0 0 0 0); }
+.pair .sweep { position: absolute; top: 0; bottom: 0; left: 100%; width: 3px; margin-left: -1.5px; background: var(--grad); box-shadow: 0 0 30px var(--o2); transition: left 1.1s var(--ease); z-index: 2; }
+.pair.done .sweep { left: 0; }
+.pair__ui { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 3; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pair__ui b { font: 700 15px/1.2 var(--f-display); text-shadow: 0 2px 16px rgba(0,0,0,.5); }
+.toggle { display: inline-flex; padding: 4px; border-radius: 999px; background: rgba(12,10,9,.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.toggle button { border: 0; background: none; color: var(--muted-dark); font: 700 13px/1 var(--f-body); padding: 10px 14px; border-radius: 999px; cursor: pointer; transition: all .3s; }
+.toggle button.on { background: var(--paper); color: var(--ink); }
+.toggle button.on.b2 { background: var(--grad); }
+@media (max-width: 760px) { .pairs { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- diferenciais ---------- */
+.why { background: var(--paper); color: var(--ink); padding-block: clamp(90px, 12vw, 150px); }
+.why__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.why__grid article { padding: clamp(24px, 2.6vw, 34px); border-radius: var(--radius); background: var(--paper-2); display: grid; gap: 14px; align-content: start; transition: background .4s var(--ease), color .4s, transform .5s var(--ease); }
+.why__grid article:hover { background: var(--ink); color: var(--paper); transform: translateY(-6px); }
+.why__grid article:hover p { color: var(--muted-dark); }
+.why__grid svg { width: 48px; height: 48px; }
+.why__grid h3 { font: 800 21px/1.18 var(--f-display); letter-spacing: -.02em; }
+.why__grid p { color: var(--muted-light); transition: color .4s; }
+@media (max-width: 1000px) { .why__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .why__grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- captação (quiz) ---------- */
+.lead {
+  position: relative; overflow: hidden; isolation: isolate;
+  background: var(--grad); color: var(--ink);
+  padding-block: clamp(90px, 12vw, 160px);
+  display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(36px, 5vw, 80px); align-items: start;
+}
+.lead > * { max-width: none; margin: 0; }
+.lead__ring { position: absolute; z-index: -1; width: 900px; height: 900px; max-width: none; left: -280px; bottom: -420px; animation: spin 80s linear infinite reverse; opacity: .35; }
+.lead__copy { display: grid; gap: 22px; padding-left: max(0px, calc((100vw - var(--max)) / 2 - var(--gutter))); position: sticky; top: 110px; }
+.lead__title { font: 900 clamp(44px, 6.4vw, 100px)/.92 var(--f-display); letter-spacing: -.05em; }
+.lead__copy p { font-size: 19px; max-width: 26em; color: rgba(12,10,9,.82); }
+.lead__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.lead__list li { display: flex; gap: 12px; align-items: center; font-weight: 700; }
+.lead__list li::before { content: "✓"; flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: var(--o1); display: grid; place-items: center; font-size: 14px; }
+.lead__wa { font: 500 14px/1.4 var(--f-mono); }
+
+.quiz {
+  background: var(--ink); color: var(--paper); border-radius: 28px;
+  padding: clamp(22px, 3vw, 40px); display: grid; gap: 24px;
+  margin-right: max(0px, calc((100vw - var(--max)) / 2 - var(--gutter)));
+  box-shadow: 0 40px 100px -30px rgba(12,10,9,.6);
+}
+.q-top { display: grid; gap: 12px; }
+.q-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.q-steps i { height: 4px; border-radius: 4px; background: var(--ink-line); overflow: hidden; position: relative; }
+.q-steps i::after { content: ""; position: absolute; inset: 0; background: var(--grad); transform: scaleX(0); transform-origin: left; transition: transform .6s var(--ease); }
+.q-steps i.on::after { transform: scaleX(1); }
+.q-label { display: flex; justify-content: space-between; gap: 10px; font: 500 12px/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted-dark); }
+.step { display: none; }
+.step.on { display: grid; gap: 22px; align-content: start; animation: stepIn .55s var(--ease); }
+@keyframes stepIn { from { opacity: 0; transform: translateX(24px); } }
+.step h3 { font: 800 clamp(22px, 2.4vw, 30px)/1.1 var(--f-display); letter-spacing: -.03em; }
+.step .intro { color: var(--muted-dark); }
+.step h4 { margin: 4px 0 0; font: 500 12px/1 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--orange); }
+.field { display: grid; gap: 8px; }
+.field > label, .field > legend { font-weight: 700; font-size: 15px; padding: 0; }
+fieldset.field { border: 0; margin: 0; padding: 0; min-width: 0; }
+.field input[type=text], .field input[type=tel], .field textarea {
+  width: 100%; padding: 15px 17px; border-radius: 14px; border: 1.5px solid var(--ink-line);
+  background: rgba(255,244,235,.05); color: var(--paper); font: 500 16px/1.3 var(--f-body);
+  transition: border-color .25s, background .25s;
+}
+.field textarea { resize: vertical; min-height: 90px; }
+.field input::placeholder, .field textarea::placeholder { color: rgba(255,244,235,.35); }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--orange); background: rgba(255,244,235,.08); }
+.field .err { color: var(--o1); font-size: 14px; font-weight: 700; display: none; }
+.field.invalid .err { display: block; }
+.field.invalid input, .field.invalid textarea { border-color: var(--o3); }
+.hint { color: var(--muted-dark); font-weight: 500; font-size: 13px; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opt { position: relative; }
+.opt input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.opt span { display: inline-block; padding: 11px 17px; border-radius: 999px; border: 1.5px solid var(--ink-line); font-weight: 700; font-size: 14px; transition: all .25s var(--ease); }
+.opt:hover span { border-color: rgba(255,244,235,.4); }
+.opt input:checked + span { background: var(--grad); color: var(--ink); border-color: transparent; }
+.opt input:focus-visible + span { outline: 3px solid var(--orange); outline-offset: 2px; }
+.q-nav { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.final { text-align: left; }
+.final .big { font: 900 clamp(32px, 4vw, 54px)/.95 var(--f-display); letter-spacing: -.04em; }
+@media (max-width: 900px) {
+  .lead { grid-template-columns: minmax(0, 1fr); }
+  .lead__copy { position: static; padding: 0; }
+  .quiz { margin-right: 0; }
+}
+
+/* ---------- botão flutuante ---------- */
+.fab { position: fixed; z-index: 60; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); transform: translateY(140%); transition: transform .6s var(--ease); }
+.fab.show { transform: none; }
+.fab .btn { box-shadow: 0 16px 40px -8px rgba(255, 79, 18, .8); }
+.fab .btn::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: 0 0 0 0 rgba(255,122,31,.7); animation: ring 2.2s infinite; }
+
+/* ---------- rodapé ---------- */
+.footer { background: var(--ink); padding: 0 var(--gutter-r) calc(28px + env(safe-area-inset-bottom, 0px)) var(--gutter); overflow: hidden; }
+.footer__big { font: 900 clamp(56px, 17vw, 270px)/.8 var(--f-display); letter-spacing: -.06em; color: transparent; -webkit-text-stroke: 1.5px rgba(255, 138, 42, .6); text-align: center; white-space: nowrap; padding-top: 48px; }
+.footer__row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--ink-line); font-size: 14px; color: var(--muted-dark); max-width: var(--max); margin-inline: auto; }
+.footer__row a { text-decoration: none; }
+.footer__row a:hover { color: var(--orange); }
+
+@keyframes spin { to { rotate: 360deg; } }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255,138,42,.7); } 70% { box-shadow: 0 0 0 10px rgba(255,138,42,0); } 100% { box-shadow: 0 0 0 0 rgba(255,138,42,0); } }
+@keyframes ring { 0% { box-shadow: 0 0 0 0 rgba(255,122,31,.6); } 80%, 100% { box-shadow: 0 0 0 16px rgba(255,122,31,0); } }
+@keyframes bob { 50% { translate: 0 -12px; } }
+@keyframes marquee { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .rulers { display: none !important; }
+}
+
+/* ===== versão delicada: fonte leve, mais respiro, menos ruído ===== */
+:root { --f-display: "Sora", "Helvetica Neue", Arial, sans-serif; --f-body: "DM Sans", "Helvetica Neue", Arial, sans-serif; --radius: 18px; }
+body { font-weight: 400; font-size: 17px; line-height: 1.75; }
+.hero__title, .h2, .lead__title, .manifesto__text, .footer__big, .marquee span, .step h3, .final .big,
+.proj figcaption b, .why__grid h3, .pair__ui b, .brand__word { font-family: var(--f-display); }
+.hero__title { font-weight: 300; font-size: clamp(40px, 5vw, 78px); line-height: 1.08; letter-spacing: -.035em; }
+.h2 { font-weight: 300; font-size: clamp(30px, 3.6vw, 52px); line-height: 1.15; letter-spacing: -.03em; }
+.lead__title { font-weight: 300; font-size: clamp(38px, 4.6vw, 70px); line-height: 1.05; letter-spacing: -.035em; }
+.manifesto__text { font-weight: 300; font-size: clamp(24px, 3vw, 42px); line-height: 1.4; letter-spacing: -.02em; max-width: 24em; }
+.why__grid h3 { font-weight: 400; font-size: 19px; line-height: 1.35; letter-spacing: -.01em; }
+.proj figcaption b { font-weight: 400; font-size: 16px; }
+.pair__ui b { font-weight: 400; }
+.step h3 { font-weight: 400; letter-spacing: -.02em; }
+.final .big { font-weight: 300; line-height: 1.1; }
+.brand__word { font-weight: 500; letter-spacing: .12em; font-size: 14px; }
+.kicker { letter-spacing: .16em; font-size: 12px; }
+.hero__lead, .lead__copy p { font-weight: 300; }
+
+/* respiro */
+.hero { padding-top: clamp(150px, 22vh, 220px); padding-bottom: clamp(110px, 16vh, 170px); gap: clamp(56px, 7vw, 120px); }
+.hero__copy { gap: 36px; }
+.manifesto { padding-block: clamp(140px, 18vw, 240px); }
+.work, .why { padding-block: clamp(120px, 15vw, 200px); }
+.work { padding-top: 0; }
+.build { padding-block: clamp(120px, 15vw, 200px); }
+.lead { padding-block: clamp(120px, 15vw, 200px); }
+.section-head { margin-bottom: clamp(48px, 6vw, 88px); gap: 22px; }
+.grid { gap: clamp(16px, 2vw, 28px); }
+.pairs { gap: clamp(20px, 2.4vw, 36px); }
+.why__grid { gap: clamp(16px, 2vw, 28px); }
+.why__grid article { padding: clamp(28px, 3vw, 44px); gap: 18px; }
+.quiz { padding: clamp(26px, 3.4vw, 52px); gap: 32px; }
+.step.on { gap: 28px; }
+#nextBtn { margin-left: auto; }
+
+/* menos ruído */
+.hero { background: radial-gradient(50% 60% at 85% 35%, rgba(255, 122, 31, .16), transparent 70%), var(--ink); }
+.hero__ring { opacity: .45; }
+.hero__grid { opacity: .25; }
+.ph { box-shadow: 0 30px 80px -30px rgba(255, 79, 18, .3); border-color: rgba(255,244,235,.08); }
+.ph--back1 { opacity: .35; } .ph--back2 { opacity: .25; }
+.float { font-weight: 500; box-shadow: 0 12px 30px -12px rgba(0,0,0,.4); }
+.float--2 { display: none; }
+.eyebrow { border-color: rgba(255,244,235,.08); }
+.marquee { transform: none; margin-block: 0; padding-block: 18px; background: transparent; color: var(--paper); border-block: 1px solid var(--ink-line); }
+.marquee span { font-weight: 200; font-size: clamp(20px, 2.4vw, 32px); text-transform: none; letter-spacing: -.01em; }
+.marquee i { color: var(--orange); font-size: 14px; }
+.btn { font-weight: 600; box-shadow: none; padding: 1.05em 1.8em; }
+.btn:hover { box-shadow: 0 12px 30px -14px rgba(255, 90, 20, .6); }
+.fab .btn { box-shadow: 0 10px 30px -10px rgba(255, 79, 18, .5); }
+.fab .btn::after { animation-duration: 3.2s; }
+.proj::after { background: linear-gradient(180deg, transparent 60%, rgba(12,10,9,.6)); }
+.proj figcaption span { color: rgba(255,255,255,.8); }
+.why__grid article:hover { transform: none; }
+.lead__ring { opacity: .18; }
+.lead__list li { font-weight: 500; }
+.lead__list li::before { width: 24px; height: 24px; font-size: 12px; }
+.opt span, .field > label, .field > legend { font-weight: 500; }
+.footer__big { font-weight: 200; -webkit-text-stroke: 1px rgba(255, 138, 42, .45); letter-spacing: -.04em; }
+.rule-x, .rule-y { opacity: .6; }
+.line-x, .line-y { opacity: .55; }
+
+.logo-mark { height: 30px; width: auto; aspect-ratio: 930.65 / 770.68; fill: url(#og); flex: none; }
+.footer .logo-mark { height: 26px; }
+
+/* ===== abertura: planta que se desenha ===== */
+.intro { display: none; }
+.js-intro .intro {
+  position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; overflow: hidden;
+  background: var(--ink); color: var(--paper); cursor: pointer;
+}
+.intro__grid { position: absolute; inset: -2px; opacity: 0;
+  background-image: linear-gradient(rgba(255,244,235,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,244,235,.06) 1px, transparent 1px),
+    linear-gradient(rgba(255,244,235,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,244,235,.025) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px; }
+.intro__slats { visibility: hidden; position: absolute; inset: 0; display: grid; grid-template-columns: repeat(6, 1fr); pointer-events: none; }
+.intro__slats i { background: var(--ink); display: block; transform-origin: top; border-right: 1px solid rgba(255,244,235,.04); }
+.intro__stage { position: relative; width: min(760px, 90vw); }
+.intro__stage svg { width: 100%; height: auto; overflow: visible; }
+.intro .ln { fill: none; stroke: rgba(255,244,235,.85); stroke-width: 1.4; stroke-linecap: square; }
+.intro .ln.thin { stroke: rgba(255,244,235,.35); stroke-width: .8; }
+.intro .ln.acc { stroke: url(#og); stroke-width: 1.6; }
+.intro .ln.wall { stroke-width: 5; stroke: rgba(255,244,235,.9); }
+.intro .cota { font: 500 11px var(--f-mono); fill: rgba(255,244,235,.55); letter-spacing: .08em; }
+.intro__stage .intro__logo { position: absolute; left: 50%; top: 50%; width: min(170px, 34vw); translate: -50% -50%; overflow: visible; }
+.intro__logo path, .intro__logo polygon { fill: url(#og); fill-opacity: 0; stroke: url(#og); stroke-width: 6; }
+.intro__meta { position: absolute; left: var(--gutter); right: var(--gutter-r); bottom: calc(28px + env(safe-area-inset-bottom, 0px)); display: flex; justify-content: space-between; gap: 16px; font: 500 11px/1 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: rgba(255,244,235,.5); }
+.intro__meta b { color: var(--orange); font-weight: 500; font-variant-numeric: tabular-nums; }
+.intro__top { position: absolute; left: var(--gutter); right: var(--gutter-r); top: calc(28px + env(safe-area-inset-top, 0px)); display: flex; justify-content: space-between; font: 500 11px/1 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: rgba(255,244,235,.5); }
+@media (max-width: 560px) { .intro__meta span:nth-child(2), .intro__top span:nth-child(2) { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro__grid"></div>
+  <div class="intro__top"><span>Achiev · Móveis planejados</span><span>Prancha 01 / Planta baixa</span><span>Esc 1:50</span></div>
+  <div class="intro__stage">
+    <svg viewBox="0 0 760 460" id="introPlan">
+      <!-- paredes -->
+      <path class="ln wall" pathLength="1" d="M40 40 H720 V420 H40 Z"/>
+      <path class="ln wall" pathLength="1" d="M400 40 V190 M400 250 V280 H40 M480 280 H720 M250 280 V420"/>
+      <!-- portas -->
+      <path class="ln thin" pathLength="1" d="M400 190 A60 60 0 0 1 460 250 M400 250 H460 M480 280 A60 60 0 0 0 420 340 M420 280 V340"/>
+      <!-- cozinha em L e ilha -->
+      <path class="ln acc" pathLength="1" d="M40 40 H380 V105 H110 V260 H40"/>
+      <path class="ln thin" pathLength="1" d="M108 40 V105 M176 40 V105 M244 40 V105 M312 40 V105 M40 125 H110 M40 190 H110"/>
+      <path class="ln acc" pathLength="1" d="M190 160 H350 V215 H190 Z"/>
+      <!-- dormitório: guarda-roupa, cama e cômoda -->
+      <path class="ln acc" pathLength="1" d="M440 40 H720 V95 H440 Z"/>
+      <path class="ln thin" pathLength="1" d="M496 40 V95 M552 40 V95 M608 40 V95 M664 40 V95"/>
+      <path class="ln" pathLength="1" d="M520 130 H660 V255 H520 Z M520 158 H660"/>
+      <!-- sala: sofá e painel -->
+      <path class="ln" pathLength="1" d="M330 320 H520 V365 H330 Z M330 320 V385 H352 V365 M520 320 V385 H498 V365"/>
+      <path class="ln acc" pathLength="1" d="M300 410 H560"/>
+      <!-- cotas -->
+      <path class="ln thin" pathLength="1" d="M40 16 H720 M40 9 V23 M400 9 V23 M720 9 V23"/>
+      <path class="ln thin" pathLength="1" d="M744 40 V420 M737 40 H751 M737 280 H751 M737 420 H751"/>
+      <text class="cota" x="220" y="9" text-anchor="middle">4.800</text>
+      <text class="cota" x="560" y="9" text-anchor="middle">4.200</text>
+      <text class="cota" x="760" y="164" transform="rotate(90 760 164)" text-anchor="middle">3.700</text>
+      <text class="cota" x="760" y="352" transform="rotate(90 760 352)" text-anchor="middle">2.100</text>
+    </svg>
+    <svg class="intro__logo" id="introLogo" viewBox="0 0 930.65 770.68">
+      <polygon pathLength="1" points="0 675.06 0 770.68 555.52 770.68 515.62 675.06 0 675.06"/>
+      <polygon pathLength="1" points="187.72 0 7.03 458.6 0 0 187.72 0"/>
+      <path pathLength="1" d="M312.46,0l39.44,97.22h578.75V0H312.46Z"/>
+      <polygon pathLength="1" points="373.22 146.75 528 146.75 653.2 476.25 778.39 146.75 919.41 146.75 667.64 770.68 639.44 770.68 373.22 146.75"/>
+      <path pathLength="1" d="M242.37,22.17L0,618.34h133.45l27.52-65.87h193.68c9.63,21.96,19.26,43.91,28.89,65.87h109.68L242.37,22.17ZM200.1,442.55v-2.29l55.95-154.55,56.87,156.84h-112.82Z"/>
+    </svg>
+  </div>
+  <div class="intro__meta"><span>Do primeiro desenho à realização</span><span>RS &amp; SC</span><span>Desenhando <b id="introPct">000</b>%</span></div>
+  <div class="intro__slats"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+</div>
+
+<div class="rulers" id="rulers" aria-hidden="true">
+  <div class="rule-x"></div><div class="rule-y"></div>
+  <div class="line-x" id="lineX"></div><div class="line-y" id="lineY"></div>
+  <div class="mark-x" id="markX"></div><div class="mark-y" id="markY"></div>
+  <div class="cur-dot" id="curDot"></div><div class="cur-xy" id="curXY"></div>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="og" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB25C"/><stop offset=".5" stop-color="#FF7A1F"/><stop offset="1" stop-color="#FF4F12"/></linearGradient>
+  </defs>
+  <symbol id="logoAV" viewBox="0 0 930.65 770.68">
+    <polygon points="0 675.06 0 770.68 555.52 770.68 515.62 675.06 0 675.06"/>
+    <polygon points="187.72 0 7.03 458.6 0 0 187.72 0"/>
+    <path d="M312.46,0l39.44,97.22h578.75V0H312.46Z"/>
+    <polygon points="373.22 146.75 528 146.75 653.2 476.25 778.39 146.75 919.41 146.75 667.64 770.68 639.44 770.68 373.22 146.75"/>
+    <path d="M242.37,22.17L0,618.34h133.45l27.52-65.87h193.68c9.63,21.96,19.26,43.91,28.89,65.87h109.68L242.37,22.17ZM200.1,442.55v-2.29l55.95-154.55,56.87,156.84h-112.82Z"/>
+  </symbol>
+  <symbol id="compass" viewBox="0 0 200 200">
+    <circle cx="100" cy="100" r="96" fill="none" stroke="currentColor" stroke-width=".6" stroke-dasharray="2 6"/>
+    <circle cx="100" cy="100" r="78" fill="none" stroke="currentColor" stroke-width=".5"/>
+    <circle cx="100" cy="100" r="52" fill="none" stroke="currentColor" stroke-width=".5" stroke-dasharray="1 3"/>
+    <path d="M100 0 V200 M0 100 H200 M29 29 L171 171 M171 29 L29 171" stroke="currentColor" stroke-width=".35"/>
+    <rect x="62" y="62" width="76" height="76" fill="none" stroke="currentColor" stroke-width=".6"/>
+  </symbol>
+</svg>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#inicio" aria-label="Achiev Móveis Planejados, início">
+    <svg class="logo-mark" viewBox="0 0 930.65 770.68" aria-hidden="true"><use href="#logoAV"/></svg>
+    <span class="brand__word">ACHIEV<small>MÓVEIS PLANEJADOS</small></span>
+  </a>
+  <nav class="nav__links" aria-label="Seções">
+    <a href="#projetos">Projetos</a>
+    <a href="#montagem">Montagem</a>
+    <a href="#diferenciais">Diferenciais</a>
+    <a href="#orcamento">Orçamento</a>
+  </nav>
+  <a class="btn btn--sm magnetic" href="#orcamento">Orçamento grátis</a>
+</header>
+
+<main>
+  <!-- TOPO -->
+  <section class="hero" id="inicio">
+    <div class="hero__grid" aria-hidden="true"></div>
+    <svg class="hero__ring" style="color:rgba(255,138,42,.16)" aria-hidden="true"><use href="#compass"/></svg>
+
+    <div class="hero__copy">
+      <p class="eyebrow"><span class="dot"></span> Rio Grande do Sul &amp; Santa Catarina</p>
+      <h1 class="hero__title" aria-label="Seu espaço. Seu estilo. Seu projeto.">
+        <span class="line"><span class="w">Seu</span> <span class="w">espaço.</span></span>
+        <span class="line"><span class="w">Seu</span> <span class="w">estilo.</span></span>
+        <span class="line"><span class="w grad-text">Seu projeto.</span></span>
+      </h1>
+      <p class="hero__lead">Móveis planejados desenvolvidos para transformar ambientes, valorizar cada detalhe e aproveitar cada espaço com elegância e funcionalidade.</p>
+      <div class="hero__ctas">
+        <a class="btn magnetic" href="#orcamento">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z"/></svg>
+          Solicite seu orçamento grátis
+        </a>
+        <a class="btn btn--ghost magnetic" href="#projetos">Ver projetos</a>
+      </div>
+    </div>
+
+    <div class="hero__visual" id="heroVisual" aria-hidden="true">
+      <div class="ph ph--back1" data-depth="18"><img src="fotos/achiev_foto_04.webp" alt=""></div>
+      <div class="ph ph--back2" data-depth="26"><img src="fotos/achiev_foto_12.webp" alt=""></div>
+      <div class="ph ph--main" data-depth="10"><img src="fotos/achiev_foto_10.webp" alt="" fetchpriority="high"></div>
+      <div class="dim"><span>2.600 mm</span></div>
+      <div class="float float--1">✦ Orçamento gratuito</div>
+      <div class="float float--2">Do desenho à realização</div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Dormitórios</span><i>✦</i><span>Cozinhas</span><i>✦</i><span>Salas</span><i>✦</i><span>Closets</span><i>✦</i><span>Home office</span><i>✦</i><span>Banheiros</span><i>✦</i>
+      <span>Dormitórios</span><i>✦</i><span>Cozinhas</span><i>✦</i><span>Salas</span><i>✦</i><span>Closets</span><i>✦</i><span>Home office</span><i>✦</i><span>Banheiros</span><i>✦</i>
+    </div>
+  </div>
+
+  <!-- MANIFESTO -->
+  <section class="manifesto">
+    <p class="manifesto__text" id="manifesto">Do primeiro desenho à realização do seu ambiente, cada detalhe importa. Transformamos ideias em ambientes prontos para viver bem.</p>
+  </section>
+
+  <!-- PROJETOS -->
+  <section class="work" id="projetos">
+    <div class="section-head">
+      <p class="kicker">Projetos realizados</p>
+      <h2 class="h2">Ambientes que já saíram do papel.</h2>
+    </div>
+    <div class="work__bar">
+      <div class="tabs" role="tablist" aria-label="Filtrar projetos" id="tabs">
+        <button class="tab is-active" role="tab" aria-selected="true" data-f="todos">Todos</button>
+        <button class="tab" role="tab" aria-selected="false" data-f="dormitorio">Dormitórios</button>
+        <button class="tab" role="tab" aria-selected="false" data-f="cozinha">Cozinhas</button>
+        <button class="tab" role="tab" aria-selected="false" data-f="sala">Sala</button>
+        <span class="tabs__pill" aria-hidden="true"></span>
+      </div>
+      <span class="work__count" id="workCount">9 projetos</span>
+    </div>
+    <div class="grid" id="grid">
+      <figure class="proj is-wide" data-c="dormitorio" data-big><img src="fotos/achiev_foto_12.webp" alt="Dormitório com painel de madeira, armários aéreos e escrivaninha" loading="lazy"><span class="plus" aria-hidden="true">+</span><figcaption><span>Dormitório</span><b>Painel de madeira, aéreos e escrivaninha</b></figcaption></figure>
+      <figure class="proj" data-c="cozinha" data-big><img src="fotos/achiev_foto_04.webp" alt="Cozinha com armários altos e cantinho do café" loading="lazy"><span class="plus" aria-hidden="true">+</span><figcaption><span>Cozinha</span><b>Armários altos e cantinho do café</b></figcaption></figure>
+      <figure class="proj" data-c="dormitorio" data-big><img src="fotos/achiev_foto_09.webp" alt="Dormitório com guarda-roupa e cômoda" loading="lazy"><span class="plus" aria-hidden="true">+</span><figcaption><span>Dormitório</span><b>Guarda-roupa e cômoda</b></figcaption></figure>
+      <figure class="proj" data-c="sala" data-big><img src="fotos/achiev_foto_01.webp" alt="Sala com painel ripado e rack" loading="lazy"><span class="plus" aria-hidden="true">+</span><figcaption><span>Sala</span><b>Painel ripado e rack</b></figcaption></figure>
+      <figure class="proj" data-c="cozinha" data-big><img src="fotos/achiev_foto_05.webp" alt="Cozinha com bancada, cooktop e torre de forno" loading="lazy"><span class="plus" aria-hidden="true">+</span><figcaption><span>Cozinha</span><b>Bancada, cooktop e torre</b></figcaption></figure>
+      <figure class="proj" data-c="dormitorio" data-big><img src="fotos/achiev_foto_08.webp" alt="Dormitório com parede da TV, gaveteiro e portas de correr" loading="lazy"><span class="plus" aria-hidden="true">+</span><figcaption><span>Dormitório</span><b>Parede da TV e portas de correr</b></figcaption></figure>
+      <figure class="proj is-wide" data-c="dormitorio" data-big><img src="fotos/achiev_foto_11.webp" alt="Dormitório com guarda-roupa integrado à TV e portas espelhadas" loading="lazy"><span class="plus" aria-hidden="true">+</span><figcaption><span>Dormitório</span><b>Guarda-roupa com TV e espelhos</b></figcaption></figure>
+      <figure class="proj" data-c="cozinha" data-big><img src="fotos/achiev_foto_02.webp" alt="Cozinha corredor" loading="lazy"><span class="plus" aria-hidden="true">+</span><figcaption><span>Cozinha</span><b>Cozinha corredor</b></figcaption></figure>
+      <figure class="proj" data-c="dormitorio" data-big><img src="fotos/achiev_foto_10.webp" alt="Dormitório com cama com gavetas e guarda-roupa" loading="lazy"><span class="plus" aria-hidden="true">+</span><figcaption><span>Dormitório</span><b>Cama com gavetas e guarda-roupa</b></figcaption></figure>
+    </div>
+  </section>
+
+  <!-- MONTAGEM -->
+  <section class="build" id="montagem">
+    <div class="section-head">
+      <p class="kicker kicker--light">Da montagem à entrega</p>
+      <h2 class="h2">O mesmo ambiente, antes e depois.</h2>
+    </div>
+    <div class="pairs">
+      <div class="pair" data-pair>
+        <img src="fotos/achiev_foto_06.webp" alt="Guarda-roupa e cômoda durante a montagem" loading="lazy">
+        <div class="after"><img src="fotos/achiev_foto_09.webp" alt="Guarda-roupa e cômoda entregues" loading="lazy"></div>
+        <i class="sweep" aria-hidden="true"></i>
+        <div class="pair__ui"><b>Guarda-roupa e cômoda</b><div class="toggle"><button type="button" class="b1 on">Em montagem</button><button type="button" class="b2">Entregue</button></div></div>
+      </div>
+      <div class="pair" data-pair>
+        <img src="fotos/achiev_foto_07.webp" alt="Parede da TV com gaveteiro durante a montagem" loading="lazy">
+        <div class="after"><img src="fotos/achiev_foto_08.webp" alt="Parede da TV com gaveteiro entregue" loading="lazy"></div>
+        <i class="sweep" aria-hidden="true"></i>
+        <div class="pair__ui"><b>Parede da TV e gaveteiro</b><div class="toggle"><button type="button" class="b1 on">Em montagem</button><button type="button" class="b2">Entregue</button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFERENCIAIS -->
+  <section class="why" id="diferenciais">
+    <div class="section-head">
+      <p class="kicker">Diferenciais</p>
+      <h2 class="h2">Por que realizar o meu projeto na Achiev?</h2>
+    </div>
+    <div class="why__grid">
+      <article class="reveal">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 42V6h36v36H6Zm0-12 12-12 10 10 14-14" fill="none" stroke="url(#og)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <h3>Projeto personalizado</h3>
+        <p>Soluções desenvolvidas de acordo com as características e necessidades de cada ambiente.</p>
+      </article>
+      <article class="reveal">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 6h36v36H6V6Zm0 14h22v22M28 30h14M14 6v14M21 6v14" fill="none" stroke="url(#og)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <h3>Aproveitamento inteligente dos espaços</h3>
+        <p>Planejamento pensado para unir organização, praticidade e funcionalidade.</p>
+      </article>
+      <article class="reveal">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="17" fill="none" stroke="url(#og)" stroke-width="3"/><circle cx="24" cy="24" r="6" fill="none" stroke="url(#og)" stroke-width="3"/><path d="M24 2v8M24 38v8M2 24h8M38 24h8" stroke="url(#og)" stroke-width="3" stroke-linecap="round"/></svg>
+        <h3>Atenção em cada detalhe</h3>
+        <p>Cuidado com a composição dos ambientes, os acabamentos e a integração dos elementos.</p>
+      </article>
+      <article class="reveal">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M17 20a7 7 0 1 0 0-14 7 7 0 0 0 0 14ZM4 42c0-9 6-14 13-14s13 5 13 14M33 18a5 5 0 1 0 0-10M36 28c5 1 8 6 8 14" fill="none" stroke="url(#og)" stroke-width="3" stroke-linecap="round"/></svg>
+        <h3>Atendimento especializado</h3>
+        <p>Acompanhamento próximo para entender as necessidades de cada cliente e orientar as escolhas do projeto.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- CAPTAÇÃO -->
+  <section class="lead" id="orcamento">
+    <svg class="lead__ring" style="color:rgba(255,255,255,.5)" aria-hidden="true"><use href="#compass"/></svg>
+    <div class="lead__copy">
+      <p class="kicker kicker--dark">Orçamento gratuito</p>
+      <h2 class="lead__title">Vamos planejar o seu espaço?</h2>
+      <p>Antes de conversarmos, é muito importante que você responda esse quiz! Leva menos de 2 minutos e no final a conversa continua no WhatsApp.</p>
+      <ul class="lead__list">
+        <li>Sem compromisso</li>
+        <li>Projeto pensado para a sua rotina</li>
+        <li>Atendimento em RS e SC</li>
+      </ul>
+      <p class="lead__wa">WhatsApp (51) 98683-1586</p>
+    </div>
+
+    <form class="quiz" id="quizForm" novalidate>
+      <div class="q-top">
+        <div class="q-steps" id="qSteps"><i class="on"></i><i></i><i></i><i></i></div>
+        <div class="q-label"><span id="qName">Informações</span><span id="qNum">01 / 04</span></div>
+      </div>
+
+      <div class="step on" data-step="1" data-name="Informações">
+        <h3>Primeiro, quem é você?</h3>
+        <div class="field"><label for="q-nome">Nome</label><input id="q-nome" name="Nome" type="text" autocomplete="name" placeholder="Seu nome" required><span class="err">Informe seu nome.</span></div>
+        <div class="field"><label for="q-cidade">Cidade</label><input id="q-cidade" name="Cidade" type="text" autocomplete="address-level2" placeholder="Ex.: Porto Alegre" required><span class="err">Informe sua cidade.</span></div>
+        <div class="field"><label for="q-tel">Telefone</label><input id="q-tel" name="Telefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(51) 90000-0000" required><span class="err">Informe um telefone com DDD.</span></div>
+      </div>
+
+      <div class="step" data-step="2" data-name="Dúvidas">
+        <h3>Sobre o seu projeto</h3>
+        <div class="field"><label for="q-amb">Quantos ambientes você deseja planejar?</label><input id="q-amb" name="Ambientes" type="text" placeholder="Ex.: cozinha e 2 dormitórios" required><span class="err">Conte quantos ambientes.</span></div>
+        <fieldset class="field" data-required><legend>Tens a planta do imóvel?</legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" id="q-planta-s" name="Tem a planta" value="Sim"><span>Sim</span></label>
+            <label class="opt"><input type="radio" id="q-planta-n" name="Tem a planta" value="Não"><span>Não</span></label>
+          </div><span class="err">Escolha uma opção.</span></fieldset>
+        <fieldset class="field" data-required><legend>Qual valor imagina investir?</legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" id="q-v1" name="Investimento" value="De 10 a 20 mil"><span>De 10 a 20 mil</span></label>
+            <label class="opt"><input type="radio" id="q-v2" name="Investimento" value="De 20 a 35 mil"><span>De 20 a 35 mil</span></label>
+            <label class="opt"><input type="radio" id="q-v3" name="Investimento" value="De 35 a 60 mil"><span>De 35 a 60 mil</span></label>
+            <label class="opt"><input type="radio" id="q-v4" name="Investimento" value="Mais de 60 mil"><span>Mais de 60 mil</span></label>
+          </div><span class="err">Escolha uma faixa.</span></fieldset>
+      </div>
+
+      <div class="step" data-step="3" data-name="Segurança e praticidade">
+        <h3>Quem vai usar o espaço</h3>
+        <h4>Segurança</h4>
+        <fieldset class="field" data-required><legend>Tem crianças pequenas em casa?</legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" id="q-c1" name="Crianças pequenas" value="Sim"><span>Sim</span></label>
+            <label class="opt"><input type="radio" id="q-c2" name="Crianças pequenas" value="Não"><span>Não</span></label>
+            <label class="opt"><input type="radio" id="q-c3" name="Crianças pequenas" value="Planejamos ter"><span>Planejamos ter</span></label>
+          </div><span class="err">Escolha uma opção.</span></fieldset>
+        <fieldset class="field" data-required><legend>Existem idosos ou pessoas com mobilidade reduzida?</legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" id="q-i1" name="Idosos ou mobilidade reduzida" value="Sim"><span>Sim</span></label>
+            <label class="opt"><input type="radio" id="q-i2" name="Idosos ou mobilidade reduzida" value="Não"><span>Não</span></label>
+          </div><span class="err">Escolha uma opção.</span></fieldset>
+        <fieldset class="field" data-required><legend>Tem animais de estimação?</legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" id="q-a1" name="Animais de estimação" value="Sim"><span>Sim</span></label>
+            <label class="opt"><input type="radio" id="q-a2" name="Animais de estimação" value="Não"><span>Não</span></label>
+          </div><span class="err">Escolha uma opção.</span></fieldset>
+        <h4>Praticidade</h4>
+        <fieldset class="field" data-required><legend>Os moradores da casa são:</legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" id="q-m1" name="Moradores" value="Destros"><span>Destros</span></label>
+            <label class="opt"><input type="radio" id="q-m2" name="Moradores" value="Canhotos"><span>Canhotos</span></label>
+            <label class="opt"><input type="radio" id="q-m3" name="Moradores" value="Ambos"><span>Ambos</span></label>
+          </div><span class="err">Escolha uma opção.</span></fieldset>
+        <fieldset class="field" data-required><legend>Os adultos da casa são: <span class="hint">(marque quantas quiser)</span></legend>
+          <div class="opts">
+            <label class="opt"><input type="checkbox" id="q-h1" name="Altura dos adultos" value="Altos"><span>Altos</span></label>
+            <label class="opt"><input type="checkbox" id="q-h2" name="Altura dos adultos" value="Baixos"><span>Baixos</span></label>
+            <label class="opt"><input type="checkbox" id="q-h3" name="Altura dos adultos" value="Medianos"><span>Medianos</span></label>
+          </div><span class="err">Marque pelo menos uma opção.</span></fieldset>
+      </div>
+
+      <div class="step" data-step="4" data-name="Perguntas importantes">
+        <h3>Perguntas importantes</h3>
+        <div class="field"><label for="q-falta">O que não pode faltar no seu projeto?</label><textarea id="q-falta" name="Não pode faltar" required></textarea><span class="err">Conte o que não pode faltar.</span></div>
+        <div class="field"><label for="q-prob">Você já teve algum problema com móveis planejados?</label><textarea id="q-prob" name="Problema anterior" required></textarea><span class="err">Responda, mesmo que seja "não".</span></div>
+      </div>
+
+      <div class="step final" data-step="5" data-name="Pronto">
+        <p class="big">Agora sim, vamos seguir a <span class="grad-text">conversa!</span></p>
+        <p class="intro" id="finalMsg">Abrindo o WhatsApp com as suas respostas…</p>
+        <a class="btn" id="waLink" href="#" target="_blank" rel="noopener">Abrir o WhatsApp ↗</a>
+      </div>
+
+      <div class="q-nav" id="qNav">
+        <button type="button" class="btn btn--ghost" id="prevBtn" hidden>Voltar</button>
+        <button type="submit" class="btn" id="nextBtn">Próximo →</button>
+      </div>
+    </form>
+  </section>
+</main>
+
+<div class="fab" id="fab"><a class="btn magnetic" href="#orcamento">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z"/></svg>
+  Orçamento grátis</a></div>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Foto do projeto">
+  <button class="lb-x" type="button" aria-label="Fechar">×</button>
+  <button class="lb-p" type="button" aria-label="Foto anterior">←</button>
+  <div><img id="lbImg" alt=""><p id="lbCap"></p></div>
+  <button class="lb-n" type="button" aria-label="Próxima foto">→</button>
+</div>
+
+<footer class="footer">
+  <div class="footer__big" aria-hidden="true">ACHIEV</div>
+  <div class="footer__row">
+    <span>Achiev Móveis Planejados · Porto Alegre · RS &amp; SC</span>
+    <a href="https://wa.me/5551986831586" target="_blank" rel="noopener">WhatsApp (51) 98683-1586</a>
+    <a href="https://instagram.com/achievplanejados" target="_blank" rel="noopener">@achievplanejados</a>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+const WHATSAPP = "5551986831586";
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const fine = matchMedia("(pointer: fine)").matches;
+const anim = !reduce && window.gsap && window.ScrollTrigger;
+let lenis = null;
+if (!anim) document.getElementById("intro")?.remove();
+
+/* rolagem suave e links internos */
+if (anim) {
+  gsap.registerPlugin(ScrollTrigger);
+  if (window.Lenis) {
+    lenis = new Lenis({ lerp: .09 });
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add(t => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+}
+$$('a[href^="#"]').forEach(a => a.addEventListener("click", e => {
+  const t = document.querySelector(a.getAttribute("href"));
+  if (!t) return;
+  e.preventDefault();
+  lenis ? lenis.scrollTo(t, { offset: -20, duration: 1.4 }) : t.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+}));
+
+/* topo e botão flutuante */
+const nav = $("#nav"), fab = $("#fab"), leadSec = $("#orcamento");
+let lastY = 0;
+function onScroll() {
+  const y = scrollY;
+  nav.classList.toggle("is-solid", y > 40);
+  nav.classList.toggle("is-hidden", y > lastY && y > 400);
+  const r = leadSec.getBoundingClientRect();
+  fab.classList.toggle("show", y > innerHeight * .8 && !(r.top < innerHeight && r.bottom > 0));
+  lastY = y;
+}
+addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+/* réguas de arquitetura no cursor */
+if (fine && !reduce) {
+  const rulers = $("#rulers"); rulers.classList.add("on");
+  const els = { lx: $("#lineX"), ly: $("#lineY"), mx: $("#markX"), my: $("#markY"), d: $("#curDot"), xy: $("#curXY") };
+  let mx = innerWidth / 2, my = innerHeight / 2, dx = mx, dy = my;
+  addEventListener("pointermove", e => { mx = e.clientX; my = e.clientY; }, { passive: true });
+  (function loop() {
+    dx += (mx - dx) * .25; dy += (my - dy) * .25;
+    els.lx.style.transform = `translateY(${my}px)`;
+    els.ly.style.transform = `translateX(${mx}px)`;
+    els.mx.style.transform = `translateX(${mx}px)`;
+    els.my.style.transform = `translateY(${my}px)`;
+    els.d.style.transform = `translate(${dx}px, ${dy}px)`;
+    els.xy.style.transform = `translate(${mx + 14}px, ${my + 14}px)`;
+    els.xy.textContent = `X ${String(Math.round(mx * 10)).padStart(5, "0")} · Y ${String(Math.round((my + scrollY) * 10)).padStart(5, "0")} mm`;
+    requestAnimationFrame(loop);
+  })();
+  $$("a, button, .proj, .pair, label").forEach(el => {
+    el.addEventListener("pointerenter", () => els.d.classList.add("big"));
+    el.addEventListener("pointerleave", () => els.d.classList.remove("big"));
+  });
+  /* fotos do topo seguem o mouse */
+  const layers = $$("#heroVisual [data-depth]");
+  addEventListener("pointermove", e => {
+    const x = e.clientX / innerWidth - .5, y = e.clientY / innerHeight - .5;
+    layers.forEach(l => { l.style.translate = `${x * l.dataset.depth}px ${y * l.dataset.depth}px`; });
+  }, { passive: true });
+  /* botões magnéticos */
+  $$(".magnetic").forEach(b => {
+    b.addEventListener("pointermove", e => {
+      const r = b.getBoundingClientRect();
+      b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .25}px, ${(e.clientY - r.top - r.height / 2) * .35}px)`;
+    });
+    b.addEventListener("pointerleave", () => { b.style.transform = ""; });
+  });
+}
+
+/* animações de entrada */
+if (anim) {
+  /* abertura: grade, planta se desenhando, cotas, logo e lâminas subindo */
+  const hero = gsap.timeline({ paused: true });
+  hero.from(".nav > *", { y: -20, opacity: 0, duration: .9, stagger: .08, ease: "expo.out" }, 0)
+    .from(".hero__title .w", { yPercent: 110, duration: 1.2, stagger: .08, ease: "expo.out" }, .05)
+    .from(".eyebrow, .hero__lead, .hero__ctas", { y: 24, opacity: 0, duration: 1, stagger: .1, ease: "expo.out" }, .35)
+    .from(".ph", { y: 80, opacity: 0, duration: 1.4, stagger: .12, ease: "expo.out" }, .15)
+    .from(".float, .dim", { scale: .6, opacity: 0, duration: .9, stagger: .15, ease: "back.out(2)" }, .9);
+  const intro = $("#intro");
+  if (intro && document.documentElement.classList.contains("js-intro")) {
+    lenis?.stop();
+    const lines = $$("#introPlan .ln"), logo = $$("#introLogo > *"), pct = $("#introPct"), c = { v: 0 };
+    gsap.set([...lines, ...logo], { strokeDasharray: 1, strokeDashoffset: 1 });
+    gsap.set("#introPlan .cota", { opacity: 0 });
+    const tl = gsap.timeline({ onComplete: () => { intro.remove(); lenis?.start(); } });
+    tl.to(".intro__grid", { opacity: 1, duration: .8, ease: "power2.out" })
+      .from(".intro__top, .intro__meta", { y: 12, opacity: 0, duration: .6, stagger: .1 }, "<.1")
+      .to(lines, { strokeDashoffset: 0, duration: 1.3, stagger: .07, ease: "power2.inOut" }, "<.2")
+      .to(c, { v: 100, duration: 2.2, ease: "power1.inOut", onUpdate: () => pct.textContent = String(Math.round(c.v)).padStart(3, "0") }, "<")
+      .to("#introPlan .cota", { opacity: 1, duration: .5, stagger: .08 }, "-=.9")
+      .to("#introPlan", { opacity: .14, scale: 1.04, duration: .8, ease: "power2.inOut" }, "+=.05")
+      .to(logo, { strokeDashoffset: 0, duration: .9, stagger: .06, ease: "power2.inOut" }, "<")
+      .to(logo, { fillOpacity: 1, strokeWidth: 0, duration: .5, ease: "power2.out" }, "-=.25")
+      .to("#introLogo", { scale: .82, duration: .5, ease: "power2.in" }, "+=.15")
+      .to(".intro__stage, .intro__top, .intro__meta, .intro__grid", { opacity: 0, duration: .35 }, "-=.15")
+      .set(intro, { background: "transparent" })
+      .set(".intro__slats", { visibility: "visible" }, "<")
+      .to(".intro__slats i", { yPercent: -101, duration: .9, stagger: .06, ease: "expo.inOut" }, "<")
+      .add(() => hero.play(), "-=.55");
+    intro.addEventListener("click", () => tl.progress(1));
+  } else hero.play();
+  gsap.to(".hero__visual", { yPercent: -12, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+
+  const m = $("#manifesto");
+  m.innerHTML = m.textContent.split(" ").map(w => `<span class="word">${w} </span>`).join("");
+  gsap.fromTo("#manifesto .word", { opacity: .12 }, { opacity: 1, stagger: .1, ease: "none", scrollTrigger: { trigger: m, start: "top 80%", end: "bottom 50%", scrub: true } });
+
+  $$(".section-head").forEach(h => gsap.from(h.children, { y: 40, opacity: 0, duration: 1.1, stagger: .1, ease: "expo.out", scrollTrigger: { trigger: h, start: "top 85%" } }));
+  gsap.from(".proj", { y: 80, opacity: 0, duration: 1.1, stagger: .07, ease: "expo.out", scrollTrigger: { trigger: "#grid", start: "top 85%" } });
+  gsap.from(".pair", { y: 80, opacity: 0, duration: 1.2, stagger: .12, ease: "expo.out", scrollTrigger: { trigger: ".pairs", start: "top 85%" } });
+  gsap.from(".why__grid article", { y: 60, opacity: 0, duration: 1.1, stagger: .1, ease: "expo.out", scrollTrigger: { trigger: ".why__grid", start: "top 85%" } });
+  gsap.from(".lead__copy > *, .quiz", { y: 50, opacity: 0, duration: 1.1, stagger: .08, ease: "expo.out", scrollTrigger: { trigger: ".lead", start: "top 75%" } });
+  gsap.from(".footer__big", { yPercent: 40, opacity: 0, duration: 1.4, ease: "expo.out", scrollTrigger: { trigger: ".footer", start: "top 90%" } });
+  addEventListener("load", () => ScrollTrigger.refresh());
+}
+
+/* filtro de projetos */
+const tabs = $$("#tabs .tab"), pill = $("#tabs .tabs__pill"), projs = $$("#grid .proj");
+function movePill(t) { pill.style.left = t.offsetLeft + "px"; pill.style.width = t.offsetWidth + "px"; }
+tabs.forEach(t => t.addEventListener("click", () => {
+  tabs.forEach(x => { x.classList.toggle("is-active", x === t); x.setAttribute("aria-selected", x === t); });
+  movePill(t);
+  const f = t.dataset.f; let n = 0;
+  projs.forEach(p => { const show = f === "todos" || p.dataset.c === f; p.classList.toggle("is-out", !show); if (show) n++; });
+  $("#workCount").textContent = `${n} projeto${n > 1 ? "s" : ""}`;
+  if (anim) { gsap.fromTo(projs.filter(p => !p.classList.contains("is-out")), { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: .7, stagger: .05, ease: "expo.out" }); ScrollTrigger.refresh(); }
+}));
+const placePill = () => movePill($("#tabs .is-active"));
+addEventListener("resize", placePill); document.fonts?.ready.then(placePill); placePill();
+
+/* ampliar foto */
+const lb = $("#lb"), lbImg = $("#lbImg"), lbCap = $("#lbCap");
+let lbI = 0;
+const visible = () => projs.filter(p => !p.classList.contains("is-out"));
+function openLb(i) { const v = visible(); lbI = (i + v.length) % v.length; const p = v[lbI]; lbImg.src = p.querySelector("img").src; lbImg.alt = p.querySelector("img").alt; lbCap.textContent = p.querySelector("b").textContent; lb.classList.add("open"); lenis?.stop(); }
+function closeLb() { lb.classList.remove("open"); lenis?.start(); }
+projs.forEach(p => p.addEventListener("click", () => openLb(visible().indexOf(p))));
+lb.querySelector(".lb-x").addEventListener("click", closeLb);
+lb.querySelector(".lb-p").addEventListener("click", () => openLb(lbI - 1));
+lb.querySelector(".lb-n").addEventListener("click", () => openLb(lbI + 1));
+lb.addEventListener("click", e => { if (e.target === lb) closeLb(); });
+addEventListener("keydown", e => { if (!lb.classList.contains("open")) return; if (e.key === "Escape") closeLb(); if (e.key === "ArrowLeft") openLb(lbI - 1); if (e.key === "ArrowRight") openLb(lbI + 1); });
+
+/* montagem → entregue */
+$$("[data-pair]").forEach(p => {
+  const [b1, b2] = p.querySelectorAll(".toggle button");
+  const set = done => { p.classList.toggle("done", done); b1.classList.toggle("on", !done); b2.classList.toggle("on", done); };
+  b1.addEventListener("click", e => { e.stopPropagation(); set(false); });
+  b2.addEventListener("click", e => { e.stopPropagation(); set(true); });
+  p.addEventListener("click", () => set(!p.classList.contains("done")));
+  new IntersectionObserver((es, o) => es.forEach(en => { if (en.isIntersecting) { setTimeout(() => set(true), 900); o.disconnect(); } }), { threshold: .6 }).observe(p);
+});
+
+/* ===== QUIZ ===== */
+const form = $("#quizForm");
+const steps = $$("#quizForm .step");
+const bars = $$("#qSteps i");
+const prevBtn = $("#prevBtn"), nextBtn = $("#nextBtn"), qNav = $("#qNav");
+let current = 1;
+
+function show(n) {
+  current = n;
+  steps.forEach(s => s.classList.toggle("on", +s.dataset.step === n));
+  bars.forEach((b, i) => b.classList.toggle("on", i < n));
+  $("#qName").textContent = steps[n - 1].dataset.name;
+  $("#qNum").textContent = n > 4 ? "Concluído" : `0${n} / 04`;
+  prevBtn.hidden = n === 1 || n === 5;
+  qNav.hidden = n === 5;
+  nextBtn.textContent = n === 4 ? "Enviar e abrir o WhatsApp →" : "Próximo →";
+  const top = form.getBoundingClientRect().top;
+  if (top < 0 || top > innerHeight * .5) lenis ? lenis.scrollTo(form, { offset: -90 }) : form.scrollIntoView({ behavior: "smooth" });
+  steps[n - 1].querySelector("input, textarea")?.focus({ preventScroll: true });
+}
+function validate(stepEl) {
+  let ok = true;
+  stepEl.querySelectorAll(".field").forEach(f => {
+    let valid = true;
+    const text = f.querySelector("input[type=text], input[type=tel], textarea");
+    if (text) {
+      const v = text.value.trim();
+      valid = text.type === "tel" ? v.replace(/\D/g, "").length >= 10 : v.length > 0;
+    } else if (f.hasAttribute("data-required")) valid = !!f.querySelector("input:checked");
+    f.classList.toggle("invalid", !valid);
+    if (!valid && ok) { (text || f.querySelector("input"))?.focus(); ok = false; }
+  });
+  return ok;
+}
+form.addEventListener("change", e => e.target.closest(".field")?.classList.remove("invalid"));
+form.addEventListener("input", e => e.target.closest(".field")?.classList.remove("invalid"));
+prevBtn.addEventListener("click", () => show(current - 1));
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  if (!validate(steps[current - 1])) return;
+  if (current < 4) return show(current + 1);
+  const grouped = {};
+  for (const [k, v] of new FormData(form).entries()) (grouped[k] ||= []).push(v.trim());
+  const lines = Object.entries(grouped).map(([k, v]) => `*${k}:* ${v.join(", ")}`);
+  const msg = `Olá, Achiev! Respondi o quiz do site e quero meu orçamento gratuito.\n\n${lines.join("\n")}`;
+  const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+  show(5);
+  $("#waLink").href = url;
+  $("#finalMsg").textContent = "Se o WhatsApp não abrir sozinho, toque no botão abaixo.";
+  setTimeout(() => { location.href = url; }, 1400);
+});
+</script>
+</body>
+</html>
