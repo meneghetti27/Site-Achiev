@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Achiev Reels</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;500&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Reels 1080x1920: planta que se desenha, logo, projetos, montagem → entrega, chamada final */
+:root {
+  --ink: #0C0A09; --paper: #FFF8F1; --muted: rgba(255,244,235,.55);
+  --o1: #FFB25C; --o2: #FF7A1F; --o3: #FF4F12;
+  --grad: linear-gradient(120deg, var(--o1), var(--o2) 45%, var(--o3));
+  --f-display: "Sora", Arial, sans-serif; --f-body: "DM Sans", Arial, sans-serif; --f-mono: "DM Mono", monospace;
+}
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--ink); color: var(--paper); font-family: var(--f-body); }
+.stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+.layer { position: absolute; inset: 0; }
+.grid {
+  background-image: linear-gradient(rgba(255,244,235,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255,244,235,.07) 1px, transparent 1px),
+    linear-gradient(rgba(255,244,235,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,244,235,.03) 1px, transparent 1px);
+  background-size: 135px 135px, 135px 135px, 27px 27px, 27px 27px; background-position: center;
+}
+.mono { font: 500 22px/1 var(--f-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.top, .bottom { position: absolute; left: 72px; right: 72px; display: flex; justify-content: space-between; }
+.top { top: 96px; } .bottom { bottom: 110px; }
+.bottom b { color: var(--o2); font-weight: 500; }
+#plan { position: absolute; left: 70px; top: 560px; width: 940px; overflow: visible; }
+.ln { fill: none; stroke: rgba(255,244,235,.9); stroke-width: 2; stroke-dasharray: 1; stroke-dashoffset: 1; stroke-linecap: square; }
+.ln.wall { stroke-width: 7; }
+.ln.thin { stroke: rgba(255,244,235,.38); stroke-width: 1.2; }
+.ln.acc { stroke: url(#og); stroke-width: 2.6; }
+.cota { font: 500 20px var(--f-mono); fill: rgba(255,244,235,.6); letter-spacing: .08em; opacity: 0; }
+#logo { position: absolute; left: 50%; top: 760px; width: 330px; transform: translateX(-50%); overflow: visible; }
+#logo > * { fill: url(#og); fill-opacity: 0; stroke: url(#og); stroke-width: 8; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.brand { position: absolute; left: 0; right: 0; top: 1110px; text-align: center; opacity: 0; }
+.brand h1 { font: 400 64px/1 var(--f-display); letter-spacing: .3em; padding-left: .3em; }
+.brand p { margin-top: 24px; }
+.slats { display: grid; grid-template-columns: repeat(6, 1fr); }
+.slats i { background: var(--grad); background-size: 600% 100%; transform: translateY(101%); }
+.slats i:nth-child(2) { background-position: 20% 0; } .slats i:nth-child(3) { background-position: 40% 0; }
+.slats i:nth-child(4) { background-position: 60% 0; } .slats i:nth-child(5) { background-position: 80% 0; } .slats i:nth-child(6) { background-position: 100% 0; }
+.photo { clip-path: inset(100% 0 0 0); overflow: hidden; }
+.photo img { width: 100%; height: 100%; object-fit: cover; }
+.photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(12,10,9,.55), rgba(12,10,9,0) 30%, rgba(12,10,9,0) 50%, rgba(12,10,9,.85)); }
+.caption { position: absolute; left: 72px; right: 72px; bottom: 300px; z-index: 2; }
+.caption .chip { display: inline-block; padding: 14px 22px; border-radius: 999px; background: rgba(12,10,9,.55); backdrop-filter: blur(10px); font: 500 22px/1 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--o1); opacity: 0; }
+.caption h2 { margin-top: 28px; font: 300 112px/1.02 var(--f-display); letter-spacing: -.035em; overflow: hidden; padding-bottom: 8px; }
+.caption h2 > span { display: inline-block; transform: translateY(110%); }
+.caption h2 .g { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.dimTop { position: absolute; left: 72px; right: 72px; top: 200px; height: 30px; z-index: 2; color: var(--o2); transform-origin: left; transform: scaleX(0); }
+.dimTop::before { content: ""; position: absolute; left: 0; right: 0; top: 15px; height: 2px; background: currentColor; }
+.dimTop::after { content: ""; position: absolute; inset: 4px 0; border-inline: 2px solid currentColor; }
+.dimTop span { position: absolute; left: 50%; top: 0; transform: translate(-50%, -50%); font: 500 22px/1 var(--f-mono); background: var(--ink); padding: 8px 14px; border-radius: 8px; }
+#cmp .after { position: absolute; inset: 0; clip-path: inset(0 0 0 100%); }
+#cmp .after img { width: 100%; height: 100%; object-fit: cover; }
+#cmp .sweep { position: absolute; top: 0; bottom: 0; width: 6px; margin-left: -3px; background: var(--grad); box-shadow: 0 0 60px var(--o2); left: 100%; z-index: 3; }
+.tag { position: absolute; top: 260px; z-index: 4; padding: 16px 26px; border-radius: 999px; font: 500 24px/1 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; }
+.tag.b { left: 72px; background: rgba(12,10,9,.75); color: var(--paper); }
+.tag.a { right: 72px; background: var(--grad); color: var(--ink); opacity: 0; }
+#end { background: var(--grad); clip-path: circle(0% at 50% 55%); color: var(--ink); display: grid; place-items: center; text-align: center; }
+#end .in { display: grid; justify-items: center; gap: 0; }
+#endLogo { width: 220px; fill: var(--ink); opacity: 0; }
+#end .k { margin-top: 70px; font: 500 24px/1 var(--f-mono); letter-spacing: .2em; text-transform: uppercase; opacity: 0; }
+#end h2 { margin-top: 30px; font: 300 108px/1.02 var(--f-display); letter-spacing: -.04em; opacity: 0; }
+#end .wa { margin-top: 70px; display: inline-flex; align-items: center; gap: 18px; padding: 30px 46px; border-radius: 999px; background: var(--ink); color: var(--paper); font: 600 38px/1 var(--f-body); opacity: 0; }
+#end .wa svg { width: 44px; height: 44px; fill: var(--o2); }
+#end .info { margin-top: 44px; font: 500 26px/1.6 var(--f-mono); letter-spacing: .08em; opacity: 0; }
+.vignette { pointer-events: none; background: radial-gradient(120% 80% at 50% 50%, transparent 60%, rgba(0,0,0,.35)); }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="og" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB25C"/><stop offset=".5" stop-color="#FF7A1F"/><stop offset="1" stop-color="#FF4F12"/></linearGradient></defs></svg>
+<div class="stage" id="stage">
+
+  <!-- cena 1: prancha -->
+  <div class="layer" id="s1">
+    <div class="layer grid" id="grid" style="opacity:0"></div>
+    <div class="top mono" id="top" style="opacity:0"><span>Achiev</span><span>Prancha 01</span><span>Esc 1:50</span></div>
+    <svg id="plan" viewBox="0 0 760 460">
+      <path class="ln wall" pathLength="1" d="M40 40 H720 V420 H40 Z"/>
+      <path class="ln wall" pathLength="1" d="M400 40 V190 M400 250 V280 H40 M480 280 H720 M250 280 V420"/>
+      <path class="ln thin" pathLength="1" d="M400 190 A60 60 0 0 1 460 250 M400 250 H460 M480 280 A60 60 0 0 0 420 340 M420 280 V340"/>
+      <path class="ln acc" pathLength="1" d="M40 40 H380 V105 H110 V260 H40"/>
+      <path class="ln thin" pathLength="1" d="M108 40 V105 M176 40 V105 M244 40 V105 M312 40 V105 M40 125 H110 M40 190 H110"/>
+      <path class="ln acc" pathLength="1" d="M190 160 H350 V215 H190 Z"/>
+      <path class="ln acc" pathLength="1" d="M440 40 H720 V95 H440 Z"/>
+      <path class="ln thin" pathLength="1" d="M496 40 V95 M552 40 V95 M608 40 V95 M664 40 V95"/>
+      <path class="ln" pathLength="1" d="M520 130 H660 V255 H520 Z M520 158 H660"/>
+      <path class="ln" pathLength="1" d="M330 320 H520 V365 H330 Z M330 320 V385 H352 V365 M520 320 V385 H498 V365"/>
+      <path class="ln acc" pathLength="1" d="M300 410 H560"/>
+      <path class="ln thin" pathLength="1" d="M40 12 H720 M40 4 V20 M400 4 V20 M720 4 V20"/>
+      <path class="ln thin" pathLength="1" d="M744 40 V420 M736 40 H752 M736 280 H752 M736 420 H752"/>
+      <text class="cota" x="220" y="0" text-anchor="middle">4.800</text>
+      <text class="cota" x="560" y="0" text-anchor="middle">4.200</text>
+      <text class="cota" x="770" y="160" transform="rotate(90 770 160)" text-anchor="middle">3.700</text>
+      <text class="cota" x="770" y="350" transform="rotate(90 770 350)" text-anchor="middle">2.100</text>
+    </svg>
+    <svg id="logo" viewBox="0 0 930.65 770.68">
+      <polygon pathLength="1" points="0 675.06 0 770.68 555.52 770.68 515.62 675.06 0 675.06"/>
+      <polygon pathLength="1" points="187.72 0 7.03 458.6 0 0 187.72 0"/>
+      <path pathLength="1" d="M312.46,0l39.44,97.22h578.75V0H312.46Z"/>
+      <polygon pathLength="1" points="373.22 146.75 528 146.75 653.2 476.25 778.39 146.75 919.41 146.75 667.64 770.68 639.44 770.68 373.22 146.75"/>
+      <path pathLength="1" d="M242.37,22.17L0,618.34h133.45l27.52-65.87h193.68c9.63,21.96,19.26,43.91,28.89,65.87h109.68L242.37,22.17ZM200.1,442.55v-2.29l55.95-154.55,56.87,156.84h-112.82Z"/>
+    </svg>
+    <div class="brand" id="brand"><h1>ACHIEV</h1><p class="mono">Móveis planejados</p></div>
+    <div class="bottom mono" id="bottom" style="opacity:0"><span>Do primeiro desenho à realização</span><span>Desenhando <b id="pct">000</b>%</span></div>
+  </div>
+
+  <!-- cena 2: projetos -->
+  <div class="layer photo" data-photo="0"><img src="../fotos/achiev_foto_10.webp" alt=""><div class="caption"><span class="chip">Dormitório</span><h2><span>Seu espaço.</span></h2></div></div>
+  <div class="layer photo" data-photo="1"><img src="../fotos/achiev_foto_04.webp" alt=""><div class="caption"><span class="chip">Cozinha</span><h2><span>Seu estilo.</span></h2></div></div>
+  <div class="layer photo" data-photo="2"><img src="../fotos/achiev_foto_12.webp" alt=""><div class="caption"><span class="chip">Dormitório</span><h2><span class="g">Seu projeto.</span></h2></div></div>
+  <div class="layer photo" data-photo="3"><img src="../fotos/achiev_foto_01.webp" alt=""><div class="caption"><span class="chip">Sala</span><h2><span>Cada detalhe<br>importa.</span></h2></div></div>
+  <div class="dimTop" id="dimTop"><span>2.600 mm</span></div>
+
+  <!-- cena 3: montagem → entregue -->
+  <div class="layer photo" id="cmp">
+    <img src="../fotos/achiev_foto_06.webp" alt="">
+    <div class="after"><img src="../fotos/achiev_foto_09.webp" alt=""></div>
+    <i class="sweep"></i>
+    <span class="tag b">Em montagem</span><span class="tag a">Entregue</span>
+    <div class="caption"><h2><span>Da montagem<br>à <span class="g">entrega.</span></span></h2></div>
+  </div>
+
+  <div class="layer slats" id="slats"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+  <!-- cena 4: chamada -->
+  <div class="layer" id="end">
+    <div class="in">
+      <svg id="endLogo" viewBox="0 0 930.65 770.68">
+        <polygon points="0 675.06 0 770.68 555.52 770.68 515.62 675.06 0 675.06"/>
+        <polygon points="187.72 0 7.03 458.6 0 0 187.72 0"/>
+        <path d="M312.46,0l39.44,97.22h578.75V0H312.46Z"/>
+        <polygon points="373.22 146.75 528 146.75 653.2 476.25 778.39 146.75 919.41 146.75 667.64 770.68 639.44 770.68 373.22 146.75"/>
+        <path d="M242.37,22.17L0,618.34h133.45l27.52-65.87h193.68c9.63,21.96,19.26,43.91,28.89,65.87h109.68L242.37,22.17ZM200.1,442.55v-2.29l55.95-154.55,56.87,156.84h-112.82Z"/>
+      </svg>
+      <p class="k">Orçamento gratuito</p>
+      <h2>Vamos planejar<br>o seu espaço?</h2>
+      <span class="wa"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z"/></svg>(51) 98683-1586</span>
+      <p class="info">@achievplanejados<br>Rio Grande do Sul &amp; Santa Catarina</p>
+    </div>
+  </div>
+  <div class="layer vignette"></div>
+</div>
+
+<script>
+/* render(t) desenha o quadro do segundo t; o gravador chama quadro a quadro */
+const DURATION = 18;
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const eo = x => x === 1 ? 1 : 1 - Math.pow(2, -10 * x);          // expo out
+const eio = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; // cubic in-out
+const lerp = (a, b, p) => a + (b - a) * p;
+
+const lines = $$("#plan .ln"), cotas = $$("#plan .cota"), logo = $$("#logo > *");
+const photos = $$("[data-photo]"), slats = $$("#slats i");
+const PH = [5.5, 7.15, 8.8, 10.45]; // início de cada foto
+
+function render(t) {
+  /* cena 1: prancha 0–5.2s */
+  $("#grid").style.opacity = eo(seg(t, 0, .8)) * (1 - seg(t, 4.6, 5.2));
+  $("#top").style.opacity = seg(t, .2, .8) * (1 - seg(t, 4.6, 5.0));
+  $("#bottom").style.opacity = seg(t, .3, .9) * (1 - seg(t, 4.6, 5.0));
+  lines.forEach((l, i) => { l.style.strokeDashoffset = 1 - eio(seg(t, .35 + i * .13, 1.55 + i * .13)); });
+  cotas.forEach((c, i) => { c.style.opacity = seg(t, 2.1 + i * .1, 2.5 + i * .1); });
+  $("#pct").textContent = String(Math.round(seg(t, .3, 2.8) * 100)).padStart(3, "0");
+  const fadePlan = eio(seg(t, 2.9, 3.5));
+  $("#plan").style.opacity = lerp(1, .12, fadePlan) * (1 - seg(t, 4.6, 5.1));
+  $("#plan").style.transform = `scale(${lerp(1, 1.06, fadePlan)})`;
+  logo.forEach((p, i) => {
+    p.style.strokeDashoffset = 1 - eio(seg(t, 3.0 + i * .08, 3.9 + i * .08));
+    p.style.fillOpacity = eo(seg(t, 3.85, 4.35));
+    p.style.strokeWidth = 8 * (1 - seg(t, 3.9, 4.35));
+  });
+  const ls = seg(t, 4.65, 5.15);
+  $("#logo").style.opacity = 1 - ls;
+  $("#logo").style.transform = `translateX(-50%) scale(${lerp(1, .85, eio(ls))})`;
+  const b = eo(seg(t, 4.1, 4.7));
+  $("#brand").style.opacity = b * (1 - ls);
+  $("#brand").style.transform = `translateY(${lerp(30, 0, b)}px)`;
+
+  /* lâminas laranja: sobem cobrindo e saem por cima (5.0–6.0s) */
+  slats.forEach((s, i) => {
+    const up = eio(seg(t, 4.95 + i * .04, 5.4 + i * .04));
+    const out = eio(seg(t, 5.5 + i * .05, 6.0 + i * .05));
+    s.style.transform = `translateY(${lerp(101, 0, up) - out * 101}%)`;
+  });
+
+  /* cena 2: fotos 5.5–12.1s */
+  photos.forEach((p, i) => {
+    const start = PH[i], end = i < 3 ? PH[i + 1] + .5 : 12.6;
+    const rev = i === 0 ? 1 : eio(seg(t, start, start + .55));
+    const vis = t >= start - (i === 0 ? .1 : 0) && t < end;
+    p.style.visibility = vis ? "visible" : "hidden";
+    p.style.clipPath = `inset(${(1 - rev) * 100}% 0 0 0)`;
+    p.style.zIndex = 10 + i;
+    const k = seg(t, start, start + 2.2);
+    p.querySelector("img").style.transform = `scale(${lerp(1.18, 1.04, eo(k))}) translateY(${lerp(30, 0, eo(k))}px)`;
+    p.querySelector(".chip").style.opacity = seg(t, start + .45, start + .8);
+    p.querySelector("h2 > span").style.transform = `translateY(${lerp(110, 0, eo(seg(t, start + .4, start + 1.2)))}%)`;
+  });
+  const d = eo(seg(t, 6.0, 6.8)) * (1 - seg(t, 11.8, 12.1));
+  $("#dimTop").style.transform = `scaleX(${d})`;
+  $("#dimTop").style.zIndex = 20;
+  $("#dimTop span").style.opacity = d;
+
+  /* cena 3: montagem → entregue 12.1–15s */
+  const cmp = $("#cmp");
+  cmp.style.zIndex = 15;
+  cmp.style.visibility = t >= 12.0 && t < 15.6 ? "visible" : "hidden";
+  cmp.style.clipPath = `inset(${(1 - eio(seg(t, 12.1, 12.65))) * 100}% 0 0 0)`;
+  cmp.querySelector(":scope > img").style.transform = `scale(${lerp(1.12, 1.02, eo(seg(t, 12.1, 14.5)))})`;
+  const w = eio(seg(t, 13.0, 14.1));
+  cmp.querySelector(".after").style.clipPath = `inset(0 0 0 ${(1 - w) * 100}%)`;
+  cmp.querySelector(".sweep").style.left = `${(1 - w) * 100}%`;
+  cmp.querySelector(".sweep").style.opacity = 1 - seg(t, 14.1, 14.3);
+  cmp.querySelector(".tag.b").style.opacity = seg(t, 12.5, 12.8) * (1 - seg(t, 13.6, 13.9));
+  cmp.querySelector(".tag.a").style.opacity = seg(t, 13.7, 14.0);
+  cmp.querySelector(".caption h2 > span").style.transform = `translateY(${lerp(110, 0, eo(seg(t, 12.5, 13.3)))}%)`;
+
+  /* cena 4: chamada 14.9–18s */
+  const e = $("#end");
+  e.style.zIndex = 30;
+  e.style.clipPath = `circle(${eio(seg(t, 14.9, 15.6)) * 120}% at 50% 55%)`;
+  const ap = (sel, a, dy = 40) => { const v = eo(seg(t, a, a + .7)); const el = $(sel); el.style.opacity = v; el.style.transform = `translateY(${lerp(dy, 0, v)}px)`; };
+  ap("#endLogo", 15.4); ap("#end .k", 15.6); ap("#end h2", 15.75); ap("#end .wa", 16.0); ap("#end .info", 16.2);
+  const pulse = seg(t, 16.8, 18);
+  $("#end .wa").style.boxShadow = `0 0 0 ${pulse * 40}px rgba(12,10,9,${.25 * (1 - pulse)})`;
+}
+window.render = render; window.DURATION = DURATION;
+render(0);
+</script>
+</body>
+</html>
