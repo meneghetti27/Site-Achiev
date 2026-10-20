@@ -2,74 +2,184 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<title>Achiev Reels 3D</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;600;800&family=DM+Mono:wght@400;500&display=swap">
+<title>Achiev Reels Liquid Glass</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@500&display=swap">
 <style>
-/* Reels 1080x1920 em 3D: ponto → plano técnico → planta → paredes sobem → móveis → vista explodida → sol → logo */
-:root { --ink: #0C0A09; --paper: #FFF8F1; --o1: #FFB25C; --o2: #FF7A1F; --o3: #FF4F12;
-  --grad: linear-gradient(120deg, var(--o1), var(--o2) 45%, var(--o3)); --f-display: "Sora", Arial, sans-serif; --f-mono: "DM Mono", monospace; }
+/* Reels 1080x1920 "liquid glass": notificação → planta → casa 3D → soluções → ambientes → orçamento → central de contato */
+:root { --ink: #1B1714; --soft: rgba(27,23,20,.55); --o1: #FFB25C; --o2: #FF7A1F; --o3: #FF4F12; --grad: linear-gradient(135deg, var(--o1), var(--o2) 50%, var(--o3)); }
 * { box-sizing: border-box; margin: 0; }
-html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--ink); color: var(--paper); font-family: var(--f-display); }
-canvas { position: absolute; inset: 0; }
-.ov { position: absolute; inset: 0; pointer-events: none; }
-.mono { font: 500 24px/1 var(--f-mono); letter-spacing: .16em; text-transform: uppercase; }
-#hud .tl, #hud .tr, #hud .bl, #hud .br { position: absolute; color: rgba(255,244,235,.6); }
-#hud .tl { left: 64px; top: 90px; } #hud .tr { right: 64px; top: 90px; text-align: right; }
-#hud .bl { left: 64px; bottom: 100px; } #hud .br { right: 64px; bottom: 100px; text-align: right; }
-#hud b { color: var(--o2); font-weight: 500; }
-#cross line { stroke: var(--o2); stroke-width: 2; }
-#cross circle { fill: var(--o2); }
-.lbl { position: absolute; left: 0; top: 0; transform: translate(-50%, -50%); white-space: nowrap; padding: 12px 20px; border-radius: 999px; background: rgba(12,10,9,.75); border: 1px solid rgba(255,122,31,.6); color: var(--paper); font: 500 22px/1 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; opacity: 0; }
-.dim { position: absolute; left: 0; top: 0; transform: translate(-50%, -50%); font: 500 26px/1 var(--f-mono); color: var(--o1); letter-spacing: .06em; opacity: 0; text-shadow: 0 0 12px rgba(0,0,0,.9); }
-#title { position: absolute; left: 64px; right: 64px; top: 230px; }
-#title .k { color: var(--o1); }
-#title h2 { margin-top: 26px; font: 300 108px/1.02 var(--f-display); letter-spacing: -.04em; }
-#title h2 span { display: block; overflow: hidden; padding-bottom: 6px; } #title h2 b { display: inline-block; font-weight: 300; }
-#title h2 .g b { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
-#kin { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); text-align: center; }
-#kin { background: radial-gradient(60% 40% at 50% 50%, rgba(12,10,9,.75), transparent); padding-block: 200px; }
-#kin p { font: 800 200px/.9 var(--f-display); letter-spacing: -.05em; text-transform: uppercase; opacity: 0; }
-#kin p:nth-child(2) { color: transparent; -webkit-text-stroke: 3px var(--paper); }
-#kin p:nth-child(3) { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
-#end { background: var(--grad); color: var(--ink); clip-path: inset(100% 0 0 0); }
-#endLogo { position: absolute; left: 50%; top: 700px; width: 360px; transform: translate(-50%, -50%); overflow: visible; }
-#endLogo > * { fill: var(--ink); fill-opacity: 0; stroke: var(--ink); stroke-width: 10; stroke-dasharray: 1; stroke-dashoffset: 1; }
-#end .k { position: absolute; left: 0; right: 0; top: 1010px; text-align: center; opacity: 0; }
-#end h2 { position: absolute; left: 0; right: 0; top: 1080px; text-align: center; font: 300 104px/1.02 var(--f-display); letter-spacing: -.04em; }
-#end h2 span { display: block; overflow: hidden; } #end h2 b { display: inline-block; font-weight: 300; }
-#wa { position: absolute; left: 50%; top: 1420px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 20px; padding: 34px 54px; border-radius: 999px; background: var(--ink); color: var(--paper); font: 600 50px/1 var(--f-display); white-space: nowrap; }
-#wa svg { width: 54px; height: 54px; fill: var(--o2); }
-#end .info { position: absolute; left: 0; right: 0; top: 1610px; text-align: center; opacity: 0; }
-#grain { opacity: .06; mix-blend-mode: overlay; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
-#vig { background: radial-gradient(110% 70% at 50% 50%, transparent 55%, rgba(0,0,0,.55)); }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #EFEBE6; color: var(--ink); font-family: "Inter", -apple-system, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+.L { position: absolute; inset: 0; }
+#bg { overflow: hidden; background: #EFEBE6; }
+.blob { position: absolute; border-radius: 50%; filter: blur(90px); }
+#gl { position: absolute; inset: 0; }
+canvas#three { position: absolute; inset: 0; }
+.glass {
+  position: absolute; border-radius: 56px;
+  background: linear-gradient(160deg, rgba(255,255,255,.62), rgba(255,255,255,.28));
+  backdrop-filter: blur(34px) saturate(170%); -webkit-backdrop-filter: blur(34px) saturate(170%);
+  border: 1.5px solid rgba(255,255,255,.75);
+  box-shadow: 0 30px 80px -20px rgba(80,50,20,.28), inset 0 1px 0 rgba(255,255,255,.9), inset 0 -20px 40px -30px rgba(255,255,255,.6);
+}
+.glass.dark { background: linear-gradient(160deg, rgba(30,24,20,.5), rgba(30,24,20,.28)); border-color: rgba(255,255,255,.28); color: #fff; }
+.app { width: 120px; height: 120px; border-radius: 32px; background: var(--grad); display: grid; place-items: center; flex: none; box-shadow: inset 0 2px 0 rgba(255,255,255,.4); }
+.app svg { width: 74px; fill: #fff; }
+.mono { font: 500 24px/1 "DM Mono", monospace; letter-spacing: .14em; text-transform: uppercase; }
+
+/* 1 notificação */
+#notif { left: 60px; width: 960px; height: 210px; padding: 0 44px; display: flex; align-items: center; gap: 34px; overflow: hidden; }
+#notif .txt { flex: 1; min-width: 0; }
+#notif .row1 { display: flex; justify-content: space-between; font: 600 34px/1 Inter; }
+#notif .row1 span { font-weight: 400; color: var(--soft); font-size: 28px; }
+#notif p { margin-top: 14px; font: 400 32px/1.25 Inter; color: rgba(27,23,20,.75); white-space: nowrap; }
+#planSvg { position: absolute; left: 70px; top: 120px; width: calc(100% - 140px); opacity: 0; }
+#planSvg .ln { fill: none; stroke: var(--ink); stroke-width: 3; stroke-dasharray: 1; stroke-dashoffset: 1; stroke-linecap: round; }
+#planSvg .ln.acc { stroke: var(--o2); stroke-width: 3.5; }
+#planSvg .ln.thin { stroke: rgba(27,23,20,.35); stroke-width: 1.5; }
+#planHead { position: absolute; left: 70px; right: 70px; top: 52px; display: flex; justify-content: space-between; align-items: center; opacity: 0; }
+#planHead b { font: 600 36px/1 Inter; }
+
+/* barra de busca */
+.search { height: 128px; border-radius: 64px; display: flex; align-items: center; gap: 24px; padding: 0 44px; font: 400 38px/1 Inter; color: rgba(27,23,20,.8); white-space: nowrap; overflow: hidden; }
+.search svg { width: 44px; height: 44px; flex: none; fill: none; stroke: rgba(27,23,20,.6); stroke-width: 2.4; }
+.caret { display: inline-block; width: 3px; height: 44px; background: var(--o2); margin-left: 4px; vertical-align: middle; }
+#search1 { left: 90px; width: 900px; top: 1520px; }
+
+/* rótulos 3D */
+.tag3 { position: absolute; left: 0; top: 0; transform: translate(-50%, -50%); padding: 22px 32px; border-radius: 40px; font: 600 30px/1 Inter; white-space: nowrap; opacity: 0; display: flex; align-items: center; gap: 14px; }
+.tag3 i { width: 16px; height: 16px; border-radius: 50%; background: var(--grad); }
+#cap3 { left: 70px; right: 70px; top: 190px; text-align: left; }
+#cap3 h2, #cap4 h2, #cap6 h2 { font: 700 92px/1.02 Inter; letter-spacing: -.035em; }
+#cap3 h2 span, #cap4 h2 span, #cap6 h2 span { display: block; overflow: hidden; padding-bottom: 6px; }
+#cap3 h2 b, #cap4 h2 b, #cap6 h2 b { display: inline-block; font-weight: 700; }
+.g { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* 4 menu de soluções */
+#menu { left: 110px; width: 860px; top: 620px; padding: 40px 34px; }
+#menu .head { display: flex; justify-content: space-between; align-items: center; padding: 0 22px 26px; font: 600 34px/1 Inter; }
+#menu .head span { color: var(--soft); font-weight: 400; font-size: 28px; }
+#menu .item { position: relative; display: flex; align-items: center; gap: 26px; height: 128px; padding: 0 26px; font: 500 38px/1.15 Inter; z-index: 1; }
+#menu .item svg { width: 50px; height: 50px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+#menu .item .ck { margin-left: auto; width: 54px; height: 54px; border-radius: 50%; background: var(--grad); display: grid; place-items: center; transform: scale(0); }
+#menu .item .ck svg { width: 30px; height: 30px; stroke: #fff; stroke-width: 3.4; }
+#pill { position: absolute; left: 34px; right: 34px; height: 128px; border-radius: 36px; background: rgba(255,255,255,.75); box-shadow: 0 10px 30px -10px rgba(80,50,20,.25); z-index: 0; }
+#cap4 { left: 110px; right: 70px; top: 230px; }
+
+/* 5 abas de ambientes */
+#tabs { left: 50px; width: 980px; top: 1500px; height: 150px; border-radius: 75px; padding: 0 16px; display: flex; align-items: center; }
+#tabs .tb { position: relative; z-index: 1; flex: 1; display: grid; justify-items: center; gap: 10px; font: 600 23px/1 Inter; color: rgba(27,23,20,.6); }
+#tabs .tb svg { width: 46px; height: 46px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+#tabs .tb.on { color: var(--o3); }
+#tpill { position: absolute; top: 14px; bottom: 14px; border-radius: 62px; background: rgba(255,255,255,.8); box-shadow: 0 8px 24px -8px rgba(80,50,20,.25); z-index: 0; }
+#roomCard { left: 190px; width: 700px; top: 520px; height: 760px; display: grid; place-items: center; }
+#roomCard .ic { position: absolute; width: 460px; height: 460px; top: 90px; left: 120px; fill: none; stroke: var(--ink); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+#roomCard .ic .a { stroke: var(--o2); stroke-width: 3.4; }
+#roomName { position: absolute; left: 0; right: 0; bottom: 90px; text-align: center; font: 700 76px/1 Inter; letter-spacing: -.03em; }
+#roomSub { position: absolute; left: 0; right: 0; bottom: 50px; text-align: center; color: var(--soft); }
+
+/* 6 orçamento */
+#cap6 { left: 70px; right: 70px; top: 360px; color: #fff; }
+#cap6 h2 { text-shadow: 0 10px 40px rgba(120,40,0,.25); }
+#search2 { left: 90px; width: 900px; top: 1000px; }
+#dock { left: 110px; width: 860px; top: 1300px; height: 210px; border-radius: 64px; display: flex; justify-content: space-around; align-items: center; padding: 0 30px; }
+.dk { width: 140px; height: 140px; border-radius: 38px; display: grid; place-items: center; background: rgba(255,255,255,.85); box-shadow: 0 10px 30px -10px rgba(80,30,0,.35); }
+.dk svg { width: 72px; height: 72px; }
+.dk.wa { background: linear-gradient(160deg, #3BE07A, #18B85A); }
+.dk.or { background: var(--grad); }
+#dockTip { position: absolute; left: 0; top: 1240px; padding: 14px 24px; border-radius: 20px; background: rgba(30,24,20,.85); color: #fff; font: 600 28px/1 Inter; transform: translateX(-50%); opacity: 0; white-space: nowrap; }
+
+/* 7 central de contato */
+.tile { position: absolute; border-radius: 64px; padding: 44px; overflow: hidden; }
+.tile .big { font: 700 64px/1.02 Inter; letter-spacing: -.03em; }
+.tile .sm { margin-top: 16px; font: 500 30px/1.25 Inter; opacity: .75; }
+.tile.or { background: var(--grad); color: #fff; border-color: rgba(255,255,255,.5); }
+#tLogo { display: grid; place-items: center; }
+#tLogo svg { width: 300px; fill: var(--o3); }
+#fx { pointer-events: none; }
 </style>
 </head>
 <body>
-<div class="ov" id="vig"></div>
-<svg class="ov" id="cross" viewBox="0 0 1080 1920"><line id="cx1" x1="540" y1="960" x2="540" y2="960"/><line id="cx2" x1="540" y1="960" x2="540" y2="960"/><circle id="cdot" cx="540" cy="960" r="0"/></svg>
-<div class="ov" id="hud">
-  <div class="tl mono">Achiev<br><span style="opacity:.6">Móveis planejados</span></div>
-  <div class="tr mono" id="sheet">Projeto 001<br><span style="opacity:.6">Esc 1:50</span></div>
-  <div class="bl mono" id="phase">Planta baixa</div>
-  <div class="br mono"><b id="pct">000</b>%</div>
+<div class="L" id="bg"></div>
+<canvas id="three"></canvas>
+<div class="L" id="ui">
+
+  <!-- 1–2: notificação que vira cartão da planta -->
+  <div class="glass" id="notif">
+    <div class="app" id="nIcon"><svg viewBox="0 0 930.65 770.68"><use href="#av"/></svg></div>
+    <div class="txt" id="nTxt"><div class="row1">Achiev <span>agora</span></div><p>Seu projeto está pronto para começar</p></div>
+    <div id="planHead"><b>Projeto 001</b><span class="mono" style="color:var(--o3)">Planta baixa</span></div>
+    <svg id="planSvg" viewBox="0 0 760 520">
+      <path class="ln" pathLength="1" d="M40 40 H720 V480 H40 Z"/>
+      <path class="ln" pathLength="1" d="M400 40 V210 M400 270 V300 H40 M480 300 H720 M250 300 V480"/>
+      <path class="ln thin" pathLength="1" d="M400 210 A60 60 0 0 1 460 270 M480 300 A60 60 0 0 0 420 360"/>
+      <path class="ln acc" pathLength="1" d="M40 40 H380 V105 H110 V280 H40"/>
+      <path class="ln acc" pathLength="1" d="M190 170 H350 V230 H190 Z"/>
+      <path class="ln acc" pathLength="1" d="M440 40 H720 V100 H440 Z"/>
+      <path class="ln" pathLength="1" d="M520 140 H660 V270 H520 Z M520 168 H660"/>
+      <path class="ln" pathLength="1" d="M330 340 H520 V390 H330 Z"/>
+      <path class="ln acc" pathLength="1" d="M300 465 H560"/>
+      <path class="ln acc" pathLength="1" d="M60 440 H230 V470 H60 Z"/>
+    </svg>
+  </div>
+  <div class="glass search" id="search1"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span id="s1txt"></span><i class="caret" id="c1"></i></div>
+
+  <!-- 3: casa -->
+  <div class="L" id="tags3"></div>
+  <div class="L" id="cap3"><p class="mono" style="color:var(--o3)">Do desenho à realização</p><h2 style="margin-top:22px"><span><b>Cada espaço</b></span><span><b class="g">pensado para você.</b></span></h2></div>
+
+  <!-- 4: soluções -->
+  <div class="L" id="cap4"><p class="mono" style="color:var(--o3)">Soluções Achiev</p><h2 style="margin-top:22px"><span><b>Por que planejar</b></span><span><b class="g">com a gente?</b></span></h2></div>
+  <div class="glass" id="menu">
+    <div class="head">Soluções <span>4 itens</span></div>
+    <div id="pill"></div>
+    <div class="item"><svg viewBox="0 0 24 24"><path d="M4 20V4h16v16H4Zm0-6 5-5 4 4 7-7"/></svg>Projeto personalizado<span class="ck"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5 9-10"/></svg></span></div>
+    <div class="item"><svg viewBox="0 0 24 24"><path d="M3 3h18v18H3V3Zm0 7h9v11M12 15h9M7 3v7M10 3v7"/></svg>Aproveitamento inteligente<span class="ck"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5 9-10"/></svg></span></div>
+    <div class="item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4"/></svg>Atenção em cada detalhe<span class="ck"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5 9-10"/></svg></span></div>
+    <div class="item"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-4 3-6.5 6.5-6.5s6.5 2.5 6.5 6.5M16 4.5a3.5 3.5 0 0 1 0 7M18.5 14c2 .8 3.2 2.8 3.2 6"/></svg>Atendimento especializado<span class="ck"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5 9-10"/></svg></span></div>
+  </div>
+
+  <!-- 5: ambientes -->
+  <div class="glass" id="roomCard">
+    <svg class="ic" viewBox="0 0 100 100" data-i="0"><path d="M10 72V40M90 72V56M10 56h80M10 72h80"/><path class="a" d="M14 56V46c0-3 2-5 5-5h20c3 0 5 2 5 5v10M50 56V48c0-3 2-5 5-5h28c3 0 5 2 5 5v8"/><path d="M14 72v6M86 72v6"/></svg>
+    <svg class="ic" viewBox="0 0 100 100" data-i="1"><path d="M12 82V30h76v52M12 50h76M12 82h76"/><path class="a" d="M12 18h76v12H12zM40 30v20M64 30v20"/><circle cx="32" cy="40" r="4"/><circle cx="72" cy="40" r="4"/><path d="M30 64h12M58 64h12"/></svg>
+    <svg class="ic" viewBox="0 0 100 100" data-i="2"><path d="M14 74V54c0-4 3-6 6-6h60c3 0 6 2 6 6v20M10 74h80M18 74v6M82 74v6"/><path class="a" d="M24 48V38c0-3 2-5 5-5h42c3 0 5 2 5 5v10M30 20h40M50 20v6"/></svg>
+    <svg class="ic" viewBox="0 0 100 100" data-i="3"><path d="M16 86V14h68v72M50 14v72M16 86h68"/><path class="a" d="M22 30h22M30 30v8M27 38l-4 14M33 38l4 14M56 34h22M56 50h22M56 66h22"/><path d="M46 50v8M54 50v8"/></svg>
+    <svg class="ic" viewBox="0 0 100 100" data-i="4"><path d="M10 56h80M16 56v28M84 56v28M60 56v20h24"/><path class="a" d="M30 30h32v20H30zM46 50v6M38 56h16M70 24v16h12"/><path d="M66 70h12"/></svg>
+    <div id="roomName">Dormitórios</div><p class="mono" id="roomSub">Ambientes planejados</p>
+  </div>
+  <div class="glass" id="tabs">
+    <div id="tpill"></div>
+    <div class="tb"><svg viewBox="0 0 24 24"><path d="M3 18V9M21 18v-4M3 14h18M3 18h18M5 14v-3h6v3M13 14v-2h7v2"/></svg>Dormitórios</div>
+    <div class="tb"><svg viewBox="0 0 24 24"><path d="M4 21V8h16v13M4 13h16M4 4h16v4H4zM12 8v5"/></svg>Cozinhas</div>
+    <div class="tb"><svg viewBox="0 0 24 24"><path d="M4 18v-5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5M3 18h18M6 11V8h12v3"/></svg>Salas</div>
+    <div class="tb"><svg viewBox="0 0 24 24"><path d="M5 21V3h14v18M12 3v18M9 11v2M15 11v2"/></svg>Closets</div>
+    <div class="tb"><svg viewBox="0 0 24 24"><path d="M3 13h18M5 13v8M19 13v8M8 5h8v6H8zM12 11v2"/></svg>Home office</div>
+  </div>
+
+  <!-- 6: orçamento -->
+  <div class="L" id="cap6"><p class="mono" style="color:rgba(255,255,255,.85)">Orçamento gratuito</p><h2 style="margin-top:22px"><span><b>Vamos planejar</b></span><span><b>o seu espaço?</b></span></h2></div>
+  <div class="glass search" id="search2"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span id="s2txt"></span><i class="caret" id="c2"></i></div>
+  <div class="glass" id="dock">
+    <div class="dk wa"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z"/></svg></div>
+    <div class="dk"><svg viewBox="0 0 24 24" fill="none" stroke="#1B1714" stroke-width="1.8" stroke-linecap="round"><path d="M3 3h18v18H3zM3 12h8V3M15 12h6M11 16v5"/></svg></div>
+    <div class="dk or"><svg viewBox="0 0 930.65 770.68" fill="#fff"><use href="#av"/></svg></div>
+    <div class="dk"><svg viewBox="0 0 24 24" fill="none" stroke="#1B1714" stroke-width="1.8" stroke-linecap="round"><path d="M3 15 15 3l6 6L9 21zM7 11l2 2M10 8l2 2M13 5l2 2"/></svg></div>
+    <div class="dk"><svg viewBox="0 0 24 24" fill="none" stroke="#1B1714" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#1B1714"/></svg></div>
+  </div>
+  <div id="dockTip">WhatsApp</div>
+
+  <!-- 7: central de contato -->
+  <div class="glass tile" id="tLogo" style="left:60px;top:430px;width:470px;height:470px"><svg viewBox="0 0 930.65 770.68"><use href="#av"/></svg></div>
+  <div class="glass tile" id="tName" style="left:550px;top:430px;width:470px;height:470px"><p class="mono" style="color:var(--o3)">Achiev</p><p class="big" style="margin-top:26px">Móveis<br>plane-<br>jados</p></div>
+  <div class="glass tile or" id="tWa" style="left:60px;top:920px;width:960px;height:300px"><p class="mono" style="color:rgba(255,255,255,.85)">WhatsApp · Orçamento grátis</p><p class="big" style="margin-top:30px;font-size:84px">(51) 98683-1586</p></div>
+  <div class="glass tile" id="tIg" style="left:60px;top:1240px;width:470px;height:300px"><p class="mono" style="color:var(--o3)">Instagram</p><p class="big" style="margin-top:30px;font-size:44px">@achiev<br>planejados</p></div>
+  <div class="glass tile" id="tRs" style="left:550px;top:1240px;width:470px;height:300px"><p class="mono" style="color:var(--o3)">Atendemos</p><p class="big" style="margin-top:30px;font-size:44px">RS &amp; SC</p></div>
+  <div class="glass tile" id="tCta" style="left:60px;top:1560px;width:960px;height:160px;display:flex;align-items:center;justify-content:center;padding:0"><p style="font:600 38px/1 Inter;text-align:center;width:100%">Seu espaço. Seu estilo. Seu projeto.</p></div>
 </div>
-<div class="ov" id="labels"></div>
-<div class="ov" id="title"><p class="mono k">Do primeiro desenho</p><h2><span><b>à realização</b></span><span class="g"><b>do seu ambiente.</b></span></h2></div>
-<div class="ov" id="kin"><p>Seu espaço.</p><p>Seu estilo.</p><p>Seu projeto.</p></div>
-<div class="ov" id="end">
-  <svg id="endLogo" viewBox="0 0 930.65 770.68">
-    <polygon pathLength="1" points="0 675.06 0 770.68 555.52 770.68 515.62 675.06 0 675.06"/>
-    <polygon pathLength="1" points="187.72 0 7.03 458.6 0 0 187.72 0"/>
-    <path pathLength="1" d="M312.46,0l39.44,97.22h578.75V0H312.46Z"/>
-    <polygon pathLength="1" points="373.22 146.75 528 146.75 653.2 476.25 778.39 146.75 919.41 146.75 667.64 770.68 639.44 770.68 373.22 146.75"/>
-    <path pathLength="1" d="M242.37,22.17L0,618.34h133.45l27.52-65.87h193.68c9.63,21.96,19.26,43.91,28.89,65.87h109.68L242.37,22.17ZM200.1,442.55v-2.29l55.95-154.55,56.87,156.84h-112.82Z"/>
-  </svg>
-  <p class="k mono">Orçamento gratuito</p>
-  <h2><span><b>Vamos planejar</b></span><span><b>o seu espaço?</b></span></h2>
-  <span id="wa"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z"/></svg><span id="waTxt"></span></span>
-  <p class="info mono">@achievplanejados · RS &amp; SC</p>
-</div>
-<div class="ov" id="grain"></div>
+<div class="L" id="fx"></div>
+<svg width="0" height="0" style="position:absolute"><defs><symbol id="av" viewBox="0 0 930.65 770.68">
+  <polygon points="0 675.06 0 770.68 555.52 770.68 515.62 675.06 0 675.06"/><polygon points="187.72 0 7.03 458.6 0 0 187.72 0"/><path d="M312.46,0l39.44,97.22h578.75V0H312.46Z"/><polygon points="373.22 146.75 528 146.75 653.2 476.25 778.39 146.75 919.41 146.75 667.64 770.68 639.44 770.68 373.22 146.75"/><path d="M242.37,22.17L0,618.34h133.45l27.52-65.87h193.68c9.63,21.96,19.26,43.91,28.89,65.87h109.68L242.37,22.17ZM200.1,442.55v-2.29l55.95-154.55,56.87,156.84h-112.82Z"/>
+</symbol></defs></svg>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
@@ -79,212 +189,161 @@ const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const seg = (t, a, b) => clamp((t - a) / (b - a));
 const eo = x => x >= 1 ? 1 : 1 - Math.pow(2, -10 * x);
 const eio = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
-const back = x => { const c = 1.9; return x <= 0 ? 0 : 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const spring = x => x <= 0 ? 0 : x >= 1 ? 1 : 1 - Math.exp(-6.5 * x) * Math.cos(9 * x); // mola com leve oscilação
 const lerp = (a, b, p) => a + (b - a) * p;
+const vis = (el, on) => { el.style.display = on ? "" : "none"; };
 
-/* ---------- cena ---------- */
-const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
-renderer.setPixelRatio(1); renderer.setSize(W, H);
-renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-document.body.prepend(renderer.domElement);
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x0C0A09);
-scene.fog = new THREE.Fog(0x0C0A09, 18, 34);
-const camera = new THREE.PerspectiveCamera(38, W / H, .1, 100);
-scene.add(new THREE.HemisphereLight(0xfff1e2, 0x1a1410, .75));
-const sun = new THREE.DirectionalLight(0xffe2c4, 1.25);
-sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048);
-Object.assign(sun.shadow.camera, { left: -8, right: 8, top: 8, bottom: -8, near: .5, far: 40 });
-sun.shadow.bias = -.0006; scene.add(sun); scene.add(sun.target);
-const ORANGE = 0xFF7A1F;
-
-const floor = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.MeshStandardMaterial({ color: 0x080605, roughness: 1 }));
-floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
-const slab = new THREE.Mesh(new THREE.BoxGeometry(8.3, .06, 6.3), new THREE.MeshStandardMaterial({ color: 0x120E0B, roughness: .9 }));
-slab.position.y = .03; slab.receiveShadow = true; scene.add(slab);
-const grid = new THREE.GridHelper(40, 80, ORANGE, 0x3a2e24);
-grid.material.transparent = true; grid.position.y = .001; scene.add(grid);
-
-const OFF = new THREE.Vector3(-4, 0, -3);
-const edgeMat = () => new THREE.LineBasicMaterial({ color: ORANGE, transparent: true, opacity: 0 });
-
-/* paredes */
-const WALLS = [[0,0,8,0],[8,0,8,6],[8,6,0,6],[0,6,0,0],[4.6,0,4.6,2.5],[0,3.6,3.3,3.6],[4.3,3.6,8,3.6],[2.8,3.6,2.8,6]];
-const WH = 2.7, WT = .14;
-const wallMat = new THREE.MeshStandardMaterial({ color: 0xEFE8DE, roughness: .85, transparent: true, opacity: 1 });
-const walls = WALLS.map(([x1, z1, x2, z2], i) => {
-  const len = Math.hypot(x2 - x1, z2 - z1) + WT;
-  const g = new THREE.BoxGeometry(len, WH, WT); g.translate(0, WH / 2, 0);
-  const m = new THREE.Mesh(g, wallMat); m.castShadow = m.receiveShadow = true;
-  m.position.set((x1 + x2) / 2 + OFF.x, 0, (z1 + z2) / 2 + OFF.z);
-  m.rotation.y = -Math.atan2(z2 - z1, x2 - x1);
-  const e = new THREE.LineSegments(new THREE.EdgesGeometry(g), edgeMat()); m.add(e);
-  scene.add(m); return { m, e };
-});
-
-/* planta: linhas que se desenham */
-function polyLine(pts, w = .07, color = 0xFFF1E2) {
-  const mat = new THREE.MeshBasicMaterial({ color, transparent: true });
-  const segs = [];
-  for (let i = 0; i < pts.length - 1; i++) {
-    const [a, b] = [pts[i], pts[i + 1]], len = Math.hypot(b[0] - a[0], b[1] - a[1]);
-    const g = new THREE.BoxGeometry(len + w, .02, w); g.translate((len + w) / 2 - w / 2, 0, 0);
-    const m = new THREE.Mesh(g, mat); m.position.set(a[0] + OFF.x, .07, a[1] + OFF.z); m.rotation.y = -Math.atan2(b[1] - a[1], b[0] - a[0]);
-    scene.add(m); segs.push(m);
-  }
-  return { segs, material: mat, draw(k) { const n = segs.length; segs.forEach((m, i) => { const kk = clamp(k * n - i); m.scale.x = Math.max(.0001, kk); m.visible = kk > 0; }); } };
+/* ---------- fundo líquido ---------- */
+const BL = [["#FFC48A", 820, 900, 1, .23], ["#FFFFFF", 700, 700, 2, .31], ["#FF9A4D", 640, 640, 3, .19], ["#F4E3D2", 900, 900, 4, .27], ["#FF6A1F", 560, 560, 5, .21]];
+const blobs = BL.map(([c, w, h]) => { const d = document.createElement("div"); d.className = "blob"; Object.assign(d.style, { width: w + "px", height: h + "px", background: c }); $("#bg").appendChild(d); return d; });
+function bg(t, hot) {
+  $("#bg").style.background = `rgb(${lerp(239, 255, hot)},${lerp(235, 122, hot)},${lerp(230, 40, hot)})`;
+  blobs.forEach((b, i) => {
+    const [, w, h, k, sp] = BL[i];
+    const x = 540 + Math.cos(t * sp * 2 + k) * 420 - w / 2, y = 960 + Math.sin(t * sp * 1.6 + k * 1.7) * 700 - h / 2;
+    b.style.transform = `translate(${x}px, ${y}px) scale(${1 + .15 * Math.sin(t * sp * 3 + k)})`;
+    b.style.opacity = i === 1 ? lerp(.9, .35, hot) : i === 4 ? lerp(.25, .9, hot) : lerp(.75, .7, hot);
+  });
 }
-const planLines = WALLS.map(([x1, z1, x2, z2]) => polyLine([[x1, z1], [x2, z2]], .1));
-const furnPlan = [
-  [[0.1,0.1],[4.4,0.1],[4.4,0.7],[0.7,0.7],[0.7,3.0],[0.1,3.0],[0.1,0.1]],
-  [[1.4,1.6],[3.4,1.6],[3.4,2.4],[1.4,2.4],[1.4,1.6]],
-  [[4.8,0.1],[7.9,0.1],[7.9,0.7],[4.8,0.7],[4.8,0.1]],
-  [[5.5,1.5],[7.3,1.5],[7.3,3.4],[5.5,3.4],[5.5,1.5]],
-  [[3.6,5.5],[6.4,5.5],[6.4,5.85],[3.6,5.85],[3.6,5.5]],
-  [[3.9,4.0],[6.0,4.0],[6.0,4.9],[3.9,4.9],[3.9,4.0]],
-  [[0.2,5.3],[2.6,5.3],[2.6,5.85],[0.2,5.85],[0.2,5.3]]
-].map(p => polyLine(p, .05, ORANGE));
 
-/* móveis */
-const woodA = new THREE.MeshStandardMaterial({ color: 0xD9C6A8, roughness: .7 });
-const woodB = new THREE.MeshStandardMaterial({ color: 0xBFAE96, roughness: .75 });
-const dark = new THREE.MeshStandardMaterial({ color: 0x3B332C, roughness: .9 });
-const white = new THREE.MeshStandardMaterial({ color: 0xF4EFE7, roughness: .6 });
+/* ---------- casa 3D ---------- */
+const renderer = new THREE.WebGLRenderer({ canvas: $("#three"), antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H); renderer.setClearColor(0x000000, 0);
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(36, W / H, .1, 100);
+scene.add(new THREE.HemisphereLight(0xffffff, 0xd8c8b6, .85));
+const sun = new THREE.DirectionalLight(0xfff1e0, .9);
+sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left: -8, right: 8, top: 8, bottom: -8, near: .5, far: 40 }); sun.shadow.bias = -.0006;
+sun.position.set(6, 12, 4); scene.add(sun);
+const shadowCatcher = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.ShadowMaterial({ opacity: .16 }));
+shadowCatcher.rotation.x = -Math.PI / 2; shadowCatcher.receiveShadow = true; scene.add(shadowCatcher);
+const OFF = { x: -4, z: -3 };
+const slab = new THREE.Mesh(new THREE.BoxGeometry(8.4, .14, 6.4), new THREE.MeshStandardMaterial({ color: 0xF7F3EE, roughness: .8 }));
+slab.position.y = -.07; slab.receiveShadow = true; scene.add(slab);
+const floorWood = new THREE.Mesh(new THREE.PlaneGeometry(8, 6), new THREE.MeshStandardMaterial({ color: 0xE6D5BE, roughness: .85 }));
+floorWood.rotation.x = -Math.PI / 2; floorWood.position.y = .005; floorWood.receiveShadow = true; scene.add(floorWood);
+
+const WALLS = [[0,0,8,0],[8,0,8,6],[0,6,0,0],[4.6,0,4.6,2.5],[0,3.6,3.3,3.6],[4.3,3.6,8,3.6],[2.8,3.6,2.8,6]];
+const wallMat = new THREE.MeshStandardMaterial({ color: 0xFFFFFF, roughness: .9 });
+const walls = WALLS.map(([x1, z1, x2, z2]) => {
+  const len = Math.hypot(x2 - x1, z2 - z1) + .14, g = new THREE.BoxGeometry(len, 2.6, .14); g.translate(0, 1.3, 0);
+  const m = new THREE.Mesh(g, wallMat); m.castShadow = m.receiveShadow = true;
+  m.position.set((x1 + x2) / 2 + OFF.x, 0, (z1 + z2) / 2 + OFF.z); m.rotation.y = -Math.atan2(z2 - z1, x2 - x1); scene.add(m); return m;
+});
+const M = c => new THREE.MeshStandardMaterial({ color: c, roughness: .65 });
+const mats = { wood: M(0xD7BE98), greige: M(0xCBBFAF), white: M(0xFAF7F2), orange: M(0xFF8A3A), dark: M(0x6E625A), stone: M(0xE9E4DC) };
 function box(x1, z1, x2, z2, y1, y2, mat) {
   const g = new THREE.BoxGeometry(x2 - x1, y2 - y1, z2 - z1); g.translate(0, (y2 - y1) / 2, 0);
-  const m = new THREE.Mesh(g, mat); m.castShadow = m.receiveShadow = true;
-  m.position.set((x1 + x2) / 2 + OFF.x, y1, (z1 + z2) / 2 + OFF.z);
-  const e = new THREE.LineSegments(new THREE.EdgesGeometry(g), edgeMat()); m.add(e); m.userData = { y1, e };
-  scene.add(m); return m;
+  const m = new THREE.Mesh(g, mats[mat]); m.castShadow = m.receiveShadow = true;
+  m.position.set((x1 + x2) / 2 + OFF.x, y1, (z1 + z2) / 2 + OFF.z); m.userData.y1 = y1; scene.add(m); return m;
 }
 const furn = [
-  box(0.1,0.1,4.4,0.7,0,0.9,woodA), box(0.1,0.7,0.7,3.0,0,0.9,woodA),
-  box(0.1,0.1,4.4,0.45,1.6,2.3,white), box(1.4,1.6,3.4,2.4,0,0.95,woodB),
-  box(5.5,1.5,7.3,3.4,0,0.5,white), box(5.4,3.38,7.4,3.5,0,1.1,woodA),
-  box(3.4,5.82,6.6,5.9,0,2.4,woodB), box(3.6,5.5,6.4,5.85,0.25,0.7,woodA),
-  box(3.9,4.0,6.0,4.9,0,0.75,dark), box(0.2,5.3,2.6,5.85,0.72,0.78,woodA), box(0.2,5.6,2.6,5.85,1.4,1.45,woodA), box(0.2,5.6,2.6,5.85,1.9,1.95,woodA)
+  box(0.1,0.1,4.4,0.7,0,0.9,"greige"), box(0.1,0.7,0.7,3.0,0,0.9,"greige"), box(0.1,0.1,4.4,0.72,0.9,0.95,"stone"),
+  box(0.1,0.1,4.4,0.45,1.6,2.3,"white"), box(1.4,1.6,3.4,2.4,0,0.95,"wood"),
+  box(4.8,0.15,7.9,0.75,0,2.5,"greige"), box(5.5,1.5,7.3,3.4,0,0.45,"white"), box(5.5,1.5,7.3,3.4,0.45,0.6,"stone"), box(5.4,3.38,7.4,3.5,0,1.1,"wood"),
+  box(3.4,5.82,6.6,5.9,0,2.4,"wood"), box(3.6,5.5,6.4,5.85,0.25,0.7,"white"), box(3.9,4.0,6.0,4.9,0,0.7,"orange"),
+  box(0.2,5.3,2.6,5.85,0.72,0.78,"wood"), box(0.2,5.6,2.6,5.85,1.5,1.55,"wood")
 ];
-
-/* guarda-roupa explodido */
-const wr = new THREE.Group(); scene.add(wr);
-const WX1 = 4.8, WX2 = 7.9, WZ1 = 0.15, WZ2 = 0.75, WY = 2.55, th = .04;
-const wPanels = [];
-function wp(x1, z1, x2, z2, y1, y2, mat, dir) {
-  const m = box(x1, z1, x2, z2, y1, y2, mat); scene.remove(m); wr.add(m);
-  m.userData.base = m.position.clone(); m.userData.dir = new THREE.Vector3(...dir); wPanels.push(m); return m;
-}
-wp(WX1, WZ1, WX2, WZ1 + th, 0, WY, woodB, [0, 0, -1]);                 // fundo
-wp(WX1, WZ1, WX1 + th, WZ2, 0, WY, woodA, [-1, 0, 0]);                 // lateral
-wp(WX2 - th, WZ1, WX2, WZ2, 0, WY, woodA, [1, 0, 0]);                  // lateral
-wp(WX1, WZ1, WX2, WZ2, WY - th, WY, woodA, [0, 1.3, 0]);               // tampo
-wp(WX1, WZ1, WX2, WZ2, 0, .1, woodB, [0, -.3, 0]);                     // base
-wp((WX1 + WX2) / 2 - .02, WZ1, (WX1 + WX2) / 2 + .02, WZ2, 0, WY, woodA, [0, .5, 0]);
-[.9, 1.6].forEach(y => wp((WX1 + WX2) / 2, WZ1, WX2, WZ2, y, y + th, white, [.4, .35 + y * .1, 0]));
-[[WX1, (WX1 + WX2) / 2 - .01], [(WX1 + WX2) / 2 + .01, WX2]].forEach(([a, b], i) => wp(a, WZ2, b, WZ2 + th, .1, WY - .05, white, [i ? .6 : -.6, 0, 1.6]));
-
-/* rótulos que seguem o 3D */
-const LABELS = [["Cozinha", [2.2, 1.3, 1.0]], ["Dormitório", [6.4, 1.3, 2.4]], ["Sala", [5.0, 1.3, 4.6]], ["Home office", [1.4, 1.3, 4.8]]];
-const labelEls = LABELS.map(([txt]) => { const d = document.createElement("div"); d.className = "lbl"; d.textContent = txt; $("#labels").appendChild(d); return d; });
-const DIMS = [["8.000", [4, .05, -0.55]], ["6.000", [8.6, .05, 3]], ["3.100", [6.35, 2.9, 0.4]], ["2.550", [8.25, 1.3, 0.45]]];
-const dimEls = DIMS.map(([txt]) => { const d = document.createElement("div"); d.className = "dim"; d.textContent = txt; $("#labels").appendChild(d); return d; });
+const TAGS = [["Cozinha", [2.4, 1.6, 1.2]], ["Dormitório", [6.4, 1.4, 2.4]], ["Sala", [5.0, 1.4, 4.4]], ["Home office", [1.4, 1.6, 4.8]]];
+const tagEls = TAGS.map(([txt]) => { const d = document.createElement("div"); d.className = "glass tag3"; d.innerHTML = `<i></i>${txt}`; $("#tags3").appendChild(d); return d; });
 const v3 = new THREE.Vector3();
-function place(el, p) { v3.set(p[0] + OFF.x, p[1], p[2] + OFF.z).project(camera); el.style.left = ((v3.x + 1) / 2 * W) + "px"; el.style.top = ((1 - v3.y) / 2 * H) + "px"; }
+const place = (el, p) => { v3.set(p[0] + OFF.x, p[1], p[2] + OFF.z).project(camera); el.style.left = ((v3.x + 1) / 2 * W) + "px"; el.style.top = ((1 - v3.y) / 2 * H) + "px"; };
+const K = (t, keys) => { if (t <= keys[0][0]) return keys[0][1]; for (let i = 0; i < keys.length - 1; i++) { const [a, va] = keys[i], [b, vb] = keys[i + 1]; if (t <= b) return lerp(va, vb, eio(seg(t, a, b))); } return keys[keys.length - 1][1]; };
 
-/* câmera em coordenadas esféricas */
-const target = new THREE.Vector3();
-function cam(r, phi, theta, tx = 0, ty = 0, tz = 0) {
-  target.set(tx, ty, tz);
-  camera.position.set(tx + r * Math.sin(phi) * Math.cos(theta), ty + r * Math.cos(phi), tz + r * Math.sin(phi) * Math.sin(theta));
-  camera.lookAt(target);
-}
-const K = (t, keys) => { // interpolação entre quadros-chave [tempo, valor]
-  if (t <= keys[0][0]) return keys[0][1];
-  for (let i = 0; i < keys.length - 1; i++) { const [a, va] = keys[i], [b, vb] = keys[i + 1]; if (t <= b) return lerp(va, vb, eio(seg(t, a, b))); }
-  return keys[keys.length - 1][1];
-};
+/* ---------- textos digitados ---------- */
+const type = (el, str, t, a, b, caret) => { const n = Math.round(seg(t, a, b) * str.length); el.textContent = str.slice(0, n); caret.style.opacity = (t > a - .3 && Math.floor(t * 3) % 2 === 0) || (t > a && t < b) ? 1 : 0; };
+const S1 = ["Qual ambiente você quer planejar?", "Cozinha, dormitório, sala…"];
 
 function render(t) {
-  /* ponto → cruz técnica (0–1.6s) */
-  const cx = eo(seg(t, .15, 1.0)), cOut = seg(t, 1.3, 1.8);
-  $("#cdot").setAttribute("r", 10 * back(seg(t, 0, .3)) * (1 - cOut));
-  $("#cx1").setAttribute("x1", 540 - 540 * cx); $("#cx1").setAttribute("x2", 540 + 540 * cx);
-  $("#cx2").setAttribute("y1", 960 - 960 * cx); $("#cx2").setAttribute("y2", 960 + 960 * cx);
-  $("#cross").style.opacity = 1 - cOut;
-  $("#hud").style.opacity = seg(t, .5, 1.0) * (1 - seg(t, 17.2, 17.6));
-  $("#pct").textContent = String(Math.round(seg(t, 1, 17) * 100)).padStart(3, "0");
-  $("#phase").textContent = t < 4.6 ? "Planta baixa" : t < 8.2 ? "Paredes" : t < 12.4 ? "Móveis planejados" : t < 15.4 ? "Vista explodida" : "Projeto concluído";
+  /* fundo: claro → laranja vivo no orçamento */
+  const hot = eio(seg(t, 14.4, 15.2));
+  bg(t, hot);
 
-  /* câmera */
-  const r = K(t, [[0, 26], [1.5, 22], [4.4, 19], [8, 16.5], [10.5, 16], [12.4, 13.5], [15.2, 12.5], [16.2, 18], [17.4, 21]]);
-  const phi = K(t, [[0, .04], [4.4, .06], [7.8, .85], [10.5, .8], [12.4, .78], [15.2, .72], [16.4, .25], [17.4, .1]]);
-  const theta = K(t, [[0, Math.PI / 2], [4.4, Math.PI / 2 + .1], [8, Math.PI / 2 + .75], [10.5, Math.PI / 2 + 1.0], [12.4, Math.PI / 2 + .35], [15.2, Math.PI / 2 + .1], [17.4, Math.PI / 2 + 2.4]]);
-  const tx = K(t, [[10.5, 0], [12.4, 2.3], [15.2, 2.3], [16.2, 0]]), ty = K(t, [[10.5, .6], [12.4, 1.1], [15.2, 1.1], [16.2, .4]]), tz = K(t, [[10.5, 0], [12.4, -1.6], [15.2, -1.6], [16.2, 0]]);
-  cam(r, phi, theta, tx, ty, tz);
+  /* 1–2 notificação → cartão da planta (0–5.2s) */
+  const n = $("#notif"); vis(n, t < 5.3);
+  const drop = spring(seg(t, .15, 1.1));
+  const grow = eio(seg(t, 1.6, 2.5));
+  const nTop = lerp(-260, 150, drop), bigTop = 360;
+  n.style.top = lerp(nTop, bigTop, grow) + "px";
+  n.style.left = lerp(60, 70, grow) + "px"; n.style.width = lerp(960, 940, grow) + "px";
+  n.style.height = lerp(210, 1000, grow) + "px"; n.style.borderRadius = lerp(56, 70, grow) + "px";
+  const tilt = eio(seg(t, 2.6, 4.6)), zoom = eio(seg(t, 4.4, 5.3));
+  n.style.transform = `perspective(1800px) rotateX(${tilt * 26 - zoom * 26}deg) rotateZ(${-tilt * 6 + zoom * 6}deg) scale(${lerp(1, 3.2, zoom)})`;
+  n.style.opacity = 1 - seg(t, 4.95, 5.3);
+  $("#nIcon").style.opacity = $("#nTxt").style.opacity = 1 - seg(t, 1.6, 1.9);
+  $("#planHead").style.opacity = $("#planSvg").style.opacity = seg(t, 2.2, 2.5);
+  $$("#planSvg .ln").forEach((l, i) => l.style.strokeDashoffset = 1 - eio(seg(t, 2.3 + i * .14, 3.2 + i * .14)));
+  const s1 = $("#search1"); vis(s1, t > 1.9 && t < 5.1);
+  const sIn = spring(seg(t, 2.0, 2.8));
+  s1.style.transform = `translateY(${lerp(260, 0, sIn)}px) scale(${lerp(.8, 1, sIn)})`; s1.style.opacity = seg(t, 2, 2.3) * (1 - seg(t, 4.6, 5));
+  const s1s = t < 3.9 ? S1[0] : S1[1];
+  type($("#s1txt"), s1s, t, t < 3.9 ? 2.3 : 4.0, t < 3.9 ? 3.4 : 4.6, $("#c1"));
 
-  /* sol gira no fim */
-  const sa = K(t, [[0, .9], [14.6, 1.2], [17.2, 4.4]]);
-  sun.position.set(Math.cos(sa) * 10, 12, Math.sin(sa) * 10); sun.intensity = lerp(1.25, 1.6, seg(t, 14.6, 16));
-  grid.material.opacity = seg(t, .8, 1.6) * lerp(1, .35, seg(t, 6, 8));
+  /* 3 casa se montando (5–9.2s) */
+  const houseOn = t > 4.9 && t < 12.3;
+  $("#three").style.display = houseOn ? "" : "none";
+  $("#three").style.opacity = seg(t, 4.95, 5.4);
+  $("#three").style.filter = `blur(${seg(t, 9.0, 9.6) * 26}px)`;
+  const r = K(t, [[4.9, 13], [6.6, 15.5], [9.2, 17], [12, 19]]);
+  const phi = K(t, [[4.9, .05], [7.2, .82], [9.2, .9]]);
+  const th = K(t, [[4.9, Math.PI / 2], [9.2, Math.PI / 2 + .9], [12, Math.PI / 2 + 1.3]]);
+  camera.position.set(r * Math.sin(phi) * Math.cos(th), r * Math.cos(phi), r * Math.sin(phi) * Math.sin(th)); camera.lookAt(0, .4, 0);
+  walls.forEach((m, i) => { const k = spring(seg(t, 5.3 + i * .14, 6.3 + i * .14)); m.scale.y = Math.max(.0001, k); m.visible = k > 0; });
+  furn.forEach((m, i) => { const a = 6.5 + i * .12, k = spring(seg(t, a, a + .8)); m.visible = t >= a; m.scale.set(lerp(.6, 1, k), Math.max(.0001, k), lerp(.6, 1, k)); m.position.y = m.userData.y1 + (1 - eo(seg(t, a, a + .5))) * 1.6; });
+  tagEls.forEach((el, i) => { place(el, TAGS[i][1]); const a = 7.9 + i * .2, k = spring(seg(t, a, a + .6)); el.style.opacity = seg(t, a, a + .2) * (1 - seg(t, 9.0, 9.3)); el.style.transform = `translate(-50%, -50%) scale(${lerp(.4, 1, k)})`; });
+  const c3 = $("#cap3"); vis(c3, t > 5.6 && t < 9.4);
+  c3.style.opacity = 1 - seg(t, 9.0, 9.3);
+  $$("#cap3 h2 b").forEach((b, i) => b.style.transform = `translateY(${lerp(110, 0, eo(seg(t, 5.8 + i * .15, 6.6 + i * .15)))}%)`);
 
-  /* planta se desenha 1.4–4.6s */
-  planLines.forEach((l, i) => { l.draw(eio(seg(t, 1.4 + i * .18, 2.4 + i * .18))); l.material.opacity = 1 - seg(t, 7.5, 8.2); });
-  furnPlan.forEach((l, i) => { l.draw(eio(seg(t, 2.8 + i * .14, 3.8 + i * .14))); l.material.opacity = 1 - seg(t, 9, 10); });
-  slab.material.opacity = 1;
-
-  /* paredes sobem 4.6–8.2s */
-  walls.forEach(({ m, e }, i) => {
-    const k = back(seg(t, 4.6 + i * .2, 5.6 + i * .2));
-    m.scale.y = Math.max(.0001, k); m.visible = k > 0;
-    e.material.opacity = seg(t, 4.6 + i * .2, 4.9 + i * .2) * lerp(1, .35, seg(t, 8, 9));
+  /* 4 soluções (9.2–12.2s) */
+  const menu = $("#menu"); vis(menu, t > 9.1 && t < 12.4); vis($("#cap4"), t > 9.1 && t < 12.4);
+  const mIn = spring(seg(t, 9.2, 10.0)), mOut = eio(seg(t, 11.9, 12.35));
+  menu.style.transform = `translateY(${lerp(300, 0, mIn) + mOut * -120}px) scale(${lerp(.7, 1, mIn) * lerp(1, .85, mOut)})`;
+  menu.style.opacity = seg(t, 9.2, 9.5) * (1 - mOut); $("#cap4").style.opacity = 1 - mOut;
+  $$("#cap4 h2 b").forEach((b, i) => b.style.transform = `translateY(${lerp(110, 0, eo(seg(t, 9.35 + i * .12, 10.1 + i * .12)))}%)`);
+  const items = $$("#menu .item"), base = 9.9, step = .5;
+  let pos = 0; for (let i = 0; i < 4; i++) pos += spring(seg(t, base + i * step, base + i * step + .45)) * (i ? 1 : 0);
+  $("#pill").style.top = (40 + 60 + pos * 128) + "px";
+  $("#pill").style.opacity = seg(t, base - .2, base);
+  items.forEach((it, i) => {
+    const a = base + i * step + .15, k = spring(seg(t, a, a + .5));
+    it.querySelector(".ck").style.transform = `scale(${k})`;
+    it.style.color = Math.round(pos) === i && t > base ? "#E2560F" : "var(--ink)";
   });
 
-  /* móveis 8.2–12.4s */
-  furn.forEach((m, i) => {
-    const a = 8.2 + i * .22, k = back(seg(t, a, a + .7));
-    m.visible = t >= a; m.scale.y = Math.max(.0001, k);
-    m.position.y = m.userData.y1 + (1 - eo(seg(t, a, a + .6))) * 2.5;
-    m.userData.e.material.opacity = seg(t, a, a + .2) * lerp(1, .45, seg(t, a + .8, a + 1.4));
-  });
+  /* 5 ambientes (12.2–14.6s) */
+  const rc = $("#roomCard"), tb = $("#tabs"); vis(rc, t > 12.1 && t < 14.7); vis(tb, t > 12.1 && t < 14.7);
+  const rIn = spring(seg(t, 12.2, 12.9)), rOut = eio(seg(t, 14.25, 14.65));
+  rc.style.transform = `scale(${lerp(.6, 1, rIn) * lerp(1, 1.15, rOut)})`; rc.style.opacity = seg(t, 12.2, 12.4) * (1 - rOut);
+  tb.style.transform = `translateY(${lerp(320, 0, rIn) + rOut * 200}px)`; tb.style.opacity = 1 - rOut;
+  const ROOMS = ["Dormitórios", "Cozinhas", "Salas", "Closets", "Home office"];
+  const rk = clamp((t - 12.6) / .38, 0, 4.0);
+  const idx = Math.min(4, Math.floor(rk));
+  const tabsEl = $$("#tabs .tb"); const tw = 948 / 5;
+  let pp = 0; for (let i = 1; i <= 4; i++) pp += spring(seg(t, 12.6 + i * .38 - .38 + .2, 12.6 + i * .38 + .1));
+  $("#tpill").style.left = (16 + pp * tw + 6) + "px"; $("#tpill").style.width = (tw - 12) + "px";
+  tabsEl.forEach((e, i) => e.classList.toggle("on", Math.round(pp) === i));
+  $("#roomName").textContent = ROOMS[Math.round(pp)];
+  $$("#roomCard .ic").forEach((ic, i) => { const d = Math.abs(pp - i); const o = clamp(1 - d * 1.6); ic.style.opacity = o; ic.style.transform = `scale(${lerp(.6, 1, o)}) rotate(${(i - pp) * 25}deg)`; });
 
-  /* guarda-roupa: monta, explode, remonta 8.4–15.4s */
-  const ex = eio(seg(t, 12.6, 13.5)) * (1 - eio(seg(t, 14.4, 15.3)));
-  wPanels.forEach((m, i) => {
-    const a = 8.4 + i * .13, k = back(seg(t, a, a + .6));
-    m.visible = t >= a; m.scale.y = Math.max(.0001, k);
-    m.position.copy(m.userData.base).addScaledVector(m.userData.dir, ex * 1.1 + (1 - eo(seg(t, a, a + .5))) * 2);
-    m.userData.e.material.opacity = Math.max(seg(t, a, a + .2) * (1 - seg(t, a + .8, a + 1.4)) * .9, ex);
-  });
+  /* 6 orçamento (14.5–17.2s) */
+  const c6 = $("#cap6"), s2 = $("#search2"), dock = $("#dock"); [c6, s2, dock, $("#dockTip")].forEach(e => vis(e, t > 14.6 && t < 17.3));
+  const o6 = 1 - eio(seg(t, 16.9, 17.25));
+  c6.style.opacity = o6; $$("#cap6 h2 b").forEach((b, i) => b.style.transform = `translateY(${lerp(110, 0, eo(seg(t, 14.75 + i * .12, 15.5 + i * .12)))}%)`);
+  const s2In = spring(seg(t, 15.0, 15.7)); s2.style.transform = `scale(${lerp(.6, 1, s2In)})`; s2.style.opacity = seg(t, 15, 15.2) * o6;
+  type($("#s2txt"), "Orçamento gratuito no WhatsApp", t, 15.4, 16.3, $("#c2"));
+  const dIn = spring(seg(t, 15.6, 16.3)); dock.style.transform = `translateY(${lerp(300, 0, dIn)}px)`; dock.style.opacity = seg(t, 15.6, 15.8) * o6;
+  $$("#dock .dk").forEach((d, i) => { const k = spring(seg(t, 15.8 + i * .08, 16.4 + i * .08)); const hop = i === 0 ? Math.max(0, Math.sin((t - 16.4) * 9)) * seg(t, 16.4, 16.5) * (1 - seg(t, 16.8, 16.9)) : 0; d.style.transform = `translateY(${lerp(60, 0, k) - hop * 40}px) scale(${lerp(.4, 1, k)})`; });
+  const tip = $("#dockTip"); tip.style.left = (110 + 30 + 80) + "px"; tip.style.opacity = seg(t, 16.35, 16.5) * o6;
 
-  /* rótulos e cotas */
-  labelEls.forEach((el, i) => { place(el, LABELS[i][1]); const a = 10.4 + i * .18; el.style.opacity = seg(t, a, a + .25) * (1 - seg(t, 12.2, 12.5)); el.style.transform = `translate(-50%, -50%) scale(${lerp(.6, 1, back(seg(t, a, a + .4)))})`; });
-  dimEls.forEach((el, i) => {
-    place(el, DIMS[i][1]);
-    const on = i < 2 ? seg(t, 2.2 + i * .2, 2.6 + i * .2) * (1 - seg(t, 6.5, 7)) : seg(t, 12.9 + (i - 2) * .15, 13.2 + (i - 2) * .15) * (1 - seg(t, 14.4, 14.7));
-    el.style.opacity = on;
-  });
-
-  /* textos */
-  const tIn = (a, b) => seg(t, a, b);
-  $("#title").style.opacity = tIn(5.2, 5.5) * (1 - tIn(7.6, 8));
-  $$("#title h2 b").forEach((b, i) => b.style.transform = `translateY(${lerp(110, 0, eo(tIn(5.3 + i * .15, 6.1 + i * .15)))}%)`);
-  $("#title .k").style.opacity = tIn(5.2, 5.6);
-  $$("#kin p").forEach((p, i) => {
-    const a = 15.5 + i * .5, k = seg(t, a, a + .45);
-    p.style.opacity = k * (1 - seg(t, 17.0, 17.3));
-    p.style.transform = `translateY(${lerp(80, 0, eo(k))}px) scale(${lerp(1.4, 1, eo(k))})`;
-    p.style.filter = `blur(${(1 - k) * 18}px)`;
-  });
-
-  /* chamada final 17.2–20s */
-  $("#end").style.clipPath = `inset(${(1 - eio(seg(t, 17.2, 17.75))) * 100}% 0 0 0)`;
-  $$("#endLogo > *").forEach((p, i) => { p.style.strokeDashoffset = 1 - eio(seg(t, 17.6 + i * .06, 18.3 + i * .06)); p.style.fillOpacity = eo(seg(t, 18.2, 18.6)); p.style.strokeWidth = 10 * (1 - seg(t, 18.25, 18.6)); });
-  $("#endLogo").style.transform = `translate(-50%, -50%) scale(${lerp(1.25, 1, eo(seg(t, 17.6, 18.6)))})`;
-  $("#end .k").style.opacity = seg(t, 18.3, 18.6);
-  $$("#end h2 b").forEach((b, i) => b.style.transform = `translateY(${lerp(110, 0, eo(seg(t, 18.35 + i * .1, 19 + i * .1)))}%)`);
-  const num = "(51) 98683-1586", n = Math.round(seg(t, 18.7, 19.4) * num.length);
-  $("#waTxt").textContent = num.slice(0, n);
-  $("#wa").style.transform = `translateX(-50%) scale(${lerp(0, 1, back(seg(t, 18.55, 18.95)))})`;
-  $("#end .info").style.opacity = seg(t, 19.2, 19.5);
+  /* 7 central de contato (17.1–20s) */
+  const T7 = [["#tLogo", 17.2], ["#tName", 17.3], ["#tWa", 17.42], ["#tIg", 17.54], ["#tRs", 17.64], ["#tCta", 17.76]];
+  T7.forEach(([s, a]) => { const e = $(s); vis(e, t > a); const k = spring(seg(t, a, a + .8)); e.style.transform = `translateY(${lerp(220, 0, k)}px) scale(${lerp(.7, 1, k)})`; e.style.opacity = seg(t, a, a + .2); });
+  const beat = Math.max(0, Math.sin((t - 18.5) * 5)) * seg(t, 18.5, 18.6);
+  $("#tWa").style.transform += ` scale(${1 + beat * .03})`;
+  $("#tLogo svg").style.transform = `scale(${lerp(.3, 1, spring(seg(t, 17.4, 18.2)))}) rotate(${lerp(-25, 0, eo(seg(t, 17.4, 18.2)))}deg)`;
 
   renderer.render(scene, camera);
 }
