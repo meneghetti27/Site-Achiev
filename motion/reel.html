@@ -96,6 +96,14 @@ canvas#three { position: absolute; inset: 0; }
 #tLogo { display: grid; place-items: center; }
 #tLogo svg { width: 300px; fill: var(--o3); }
 #fx { pointer-events: none; }
+#outro { background: radial-gradient(70% 45% at 50% 46%, #FFFFFF, #F4EEE7 60%, #EDE3D8); clip-path: circle(0% at 50% 50%); }
+#oLogo { position: absolute; left: 50%; top: 800px; width: 520px; transform: translate(-50%, -50%); overflow: visible; }
+#oLogo .pc { transform-box: view-box; }
+#oShine { position: absolute; left: 50%; top: 800px; width: 620px; height: 560px; transform: translate(-50%, -50%); overflow: hidden; -webkit-mask: url(#avMask); pointer-events: none; }
+#oShine i { position: absolute; top: -20%; bottom: -20%; width: 160px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.85), transparent); transform: skewX(-20deg); }
+#oName { position: absolute; left: 0; right: 0; top: 1150px; text-align: center; font: 700 96px/1 Inter; letter-spacing: .3em; padding-left: .3em; color: #1B1714; }
+#oSub { position: absolute; left: 0; right: 0; top: 1290px; text-align: center; color: #E2560F; }
+#oGlow { position: absolute; left: 50%; top: 800px; width: 900px; height: 900px; margin: -450px 0 0 -450px; border-radius: 50%; background: radial-gradient(closest-side, rgba(255,140,60,.35), transparent); }
 </style>
 </head>
 <body>
@@ -170,11 +178,26 @@ canvas#three { position: absolute; inset: 0; }
 
   <!-- 7: central de contato -->
   <div class="glass tile" id="tLogo" style="left:60px;top:430px;width:470px;height:470px"><svg viewBox="0 0 930.65 770.68"><use href="#av"/></svg></div>
-  <div class="glass tile" id="tName" style="left:550px;top:430px;width:470px;height:470px"><p class="mono" style="color:var(--o3)">Achiev</p><p class="big" style="margin-top:26px">Móveis<br>plane-<br>jados</p></div>
+  <div class="glass tile" id="tName" style="left:550px;top:430px;width:470px;height:470px"><p class="mono" style="color:var(--o3)">Achiev</p><p class="big" style="margin-top:26px;font-size:54px">Móveis<br>planejados</p></div>
   <div class="glass tile or" id="tWa" style="left:60px;top:920px;width:960px;height:300px"><p class="mono" style="color:rgba(255,255,255,.85)">WhatsApp · Orçamento grátis</p><p class="big" style="margin-top:30px;font-size:84px">(51) 98683-1586</p></div>
   <div class="glass tile" id="tIg" style="left:60px;top:1240px;width:470px;height:300px"><p class="mono" style="color:var(--o3)">Instagram</p><p class="big" style="margin-top:30px;font-size:44px">@achiev<br>planejados</p></div>
   <div class="glass tile" id="tRs" style="left:550px;top:1240px;width:470px;height:300px"><p class="mono" style="color:var(--o3)">Atendemos</p><p class="big" style="margin-top:30px;font-size:44px">RS &amp; SC</p></div>
-  <div class="glass tile" id="tCta" style="left:60px;top:1560px;width:960px;height:160px;display:flex;align-items:center;justify-content:center;padding:0"><p style="font:600 38px/1 Inter;text-align:center;width:100%">Seu espaço. Seu estilo. Seu projeto.</p></div>
+  <div class="glass tile" id="tCta" style="left:60px;top:1560px;width:960px;height:160px;padding:0;display:grid;place-items:center"><p style="font:600 40px/160px Inter;height:160px;text-align:center;white-space:nowrap;margin:0;width:100%">Seu espaço. Seu estilo. Seu projeto.</p></div>
+</div>
+<div class="L" id="outro">
+  <div id="oGlow"></div>
+  <svg id="oLogo" viewBox="-40 -40 1010.65 850.68">
+    <defs><linearGradient id="og2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB25C"/><stop offset=".5" stop-color="#FF7A1F"/><stop offset="1" stop-color="#FF4F12"/></linearGradient></defs>
+    <g fill="url(#og2)">
+      <polygon class="pc" points="0 675.06 0 770.68 555.52 770.68 515.62 675.06 0 675.06"/>
+      <polygon class="pc" points="187.72 0 7.03 458.6 0 0 187.72 0"/>
+      <path class="pc" d="M312.46,0l39.44,97.22h578.75V0H312.46Z"/>
+      <polygon class="pc" points="373.22 146.75 528 146.75 653.2 476.25 778.39 146.75 919.41 146.75 667.64 770.68 639.44 770.68 373.22 146.75"/>
+      <path class="pc" d="M242.37,22.17L0,618.34h133.45l27.52-65.87h193.68c9.63,21.96,19.26,43.91,28.89,65.87h109.68L242.37,22.17ZM200.1,442.55v-2.29l55.95-154.55,56.87,156.84h-112.82Z"/>
+    </g>
+  </svg>
+  <div id="oName">ACHIEV</div>
+  <p class="mono" id="oSub">Móveis planejados</p>
 </div>
 <div class="L" id="fx"></div>
 <svg width="0" height="0" style="position:absolute"><defs><symbol id="av" viewBox="0 0 930.65 770.68">
@@ -183,7 +206,7 @@ canvas#three { position: absolute; inset: 0; }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-const DURATION = 20, W = 1080, H = 1920;
+const DURATION = 23, W = 1080, H = 1920;
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const seg = (t, a, b) => clamp((t - a) / (b - a));
@@ -345,6 +368,26 @@ function render(t) {
   $("#tWa").style.transform += ` scale(${1 + beat * .03})`;
   $("#tLogo svg").style.transform = `scale(${lerp(.3, 1, spring(seg(t, 17.4, 18.2)))}) rotate(${lerp(-25, 0, eo(seg(t, 17.4, 18.2)))}deg)`;
 
+  /* 8 fechamento com o logo (20–23s) */
+  const sh = eio(seg(t, 19.9, 20.4));
+  T7.forEach(([sel]) => { const e = $(sel); if (t > 19.9) { e.style.transform = `translateY(${-sh * 80}px) scale(${lerp(1, .55, sh)})`; e.style.opacity = 1 - sh; } });
+  const o = $("#outro"); vis(o, t > 20.05);
+  o.style.clipPath = `circle(${eio(seg(t, 20.05, 20.6)) * 120}% at 50% 50%)`;
+  const FROM = [[-700, 500, -60], [-600, -700, 45], [700, -600, -30], [800, 400, 70], [-500, -100, -90]];
+  $$("#oLogo .pc").forEach((pc, i) => {
+    const a = 20.35 + i * .09, k = spring(seg(t, a, a + .85)), [dx, dy, r] = FROM[i];
+    pc.style.transform = `translate(${dx * (1 - k)}px, ${dy * (1 - k)}px) rotate(${r * (1 - k)}deg)`;
+    pc.style.opacity = seg(t, a, a + .12);
+  });
+  const settle = spring(seg(t, 21.2, 21.9));
+  $("#oLogo").style.transform = `translate(-50%, -50%) scale(${lerp(.92, 1, settle) + Math.sin(seg(t, 21.9, 23) * Math.PI) * .015})`;
+  $("#oGlow").style.opacity = seg(t, 21.1, 21.5) * (.8 + .2 * Math.sin(t * 4));
+  $("#oGlow").style.transform = `scale(${lerp(.4, 1, eo(seg(t, 21.1, 21.9)))})`;
+  const nm = eo(seg(t, 21.45, 22.3));
+  $("#oName").style.opacity = seg(t, 21.45, 21.75); $("#oName").style.letterSpacing = lerp(.9, .3, nm) + "em";
+  $("#oName").style.transform = `translateY(${lerp(40, 0, nm)}px)`; $("#oName").style.filter = `blur(${(1 - nm) * 10}px)`;
+  $("#oSub").style.opacity = seg(t, 21.8, 22.1);
+  const shine = $("#oShineBar"); if (shine) shine.style.left = lerp(-200, 700, eio(seg(t, 21.55, 22.25))) + "px";
   renderer.render(scene, camera);
 }
 window.render = render; window.DURATION = DURATION;
