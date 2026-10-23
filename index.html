@@ -436,6 +436,27 @@ body { font-weight: 400; font-size: 17px; line-height: 1.75; }
 .intro__meta b { color: var(--orange); font-weight: 500; font-variant-numeric: tabular-nums; }
 .intro__top { position: absolute; left: var(--gutter); right: var(--gutter-r); top: calc(28px + env(safe-area-inset-top, 0px)); display: flex; justify-content: space-between; font: 500 11px/1 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: rgba(255,244,235,.5); }
 @media (max-width: 560px) { .intro__meta span:nth-child(2), .intro__top span:nth-child(2) { display: none; } }
+
+/* ---------- perguntas frequentes ---------- */
+.faq { background: var(--ink); color: var(--paper); padding-block: clamp(120px, 15vw, 200px); position: relative; overflow: hidden; isolation: isolate; }
+.faq::before { content: ""; position: absolute; z-index: -1; width: 60vw; height: 60vw; right: -20vw; top: -20vw; background: radial-gradient(closest-side, rgba(255,122,31,.16), transparent); }
+.faq__wrap { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(40px, 6vw, 100px); align-items: start; }
+.faq .section-head { margin: 0; position: sticky; top: 120px; }
+.faq .section-head p.lead-txt { color: var(--muted-dark); max-width: 30em; font-weight: 300; }
+.faq__list { border-top: 1px solid var(--ink-line); }
+.faq details { border-bottom: 1px solid var(--ink-line); }
+.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 30px 0; font: 400 clamp(19px, 1.7vw, 24px)/1.35 var(--f-display); letter-spacing: -.01em; transition: color .3s; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary:hover { color: var(--orange); }
+.faq summary .ic { flex: none; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--ink-line); display: grid; place-items: center; position: relative; transition: background .4s var(--ease), border-color .4s, transform .5s var(--ease); }
+.faq summary .ic::before, .faq summary .ic::after { content: ""; position: absolute; width: 14px; height: 1.5px; background: currentColor; transition: transform .5s var(--ease); }
+.faq summary .ic::after { transform: rotate(90deg); }
+.faq details[open] summary .ic { background: var(--grad); border-color: transparent; color: var(--ink); transform: rotate(180deg); }
+.faq details[open] summary .ic::after { transform: rotate(0deg); }
+.faq .ans { overflow: hidden; }
+.faq .ans p { padding: 0 64px 30px 0; color: var(--muted-dark); font-weight: 300; max-width: 46em; }
+.faq .ans b { color: var(--paper); font-weight: 500; }
+@media (max-width: 900px) { .faq__wrap { grid-template-columns: minmax(0, 1fr); } .faq .section-head { position: static; } .faq .ans p { padding-right: 0; } }
 </style>
 </head>
 <body>
@@ -517,6 +538,7 @@ body { font-weight: 400; font-size: 17px; line-height: 1.75; }
     <a href="#projetos">Projetos</a>
     <a href="#montagem">Montagem</a>
     <a href="#diferenciais">Diferenciais</a>
+    <a href="#duvidas">Dúvidas</a>
     <a href="#orcamento">Orçamento</a>
   </nav>
   <a class="btn btn--sm magnetic" href="#orcamento">Orçamento grátis</a>
@@ -645,6 +667,31 @@ body { font-weight: 400; font-size: 17px; line-height: 1.75; }
         <h3>Atendimento especializado</h3>
         <p>Acompanhamento próximo para entender as necessidades de cada cliente e orientar as escolhas do projeto.</p>
       </article>
+    </div>
+  </section>
+
+  <!-- PERGUNTAS FREQUENTES -->
+  <section class="faq" id="duvidas">
+    <div class="faq__wrap">
+      <div class="section-head">
+        <p class="kicker kicker--light">Perguntas frequentes</p>
+        <h2 class="h2">Ficou alguma dúvida?</h2>
+        <p class="lead-txt">As respostas para o que mais perguntam antes de planejar com a Achiev.</p>
+      </div>
+      <div class="faq__list">
+        <details open>
+          <summary>Qual é o prazo para fabricação e instalação dos móveis?<span class="ic" aria-hidden="true"></span></summary>
+          <div class="ans"><p>O prazo pode variar de acordo com a complexidade do projeto, os materiais escolhidos e a quantidade de móveis. Após a aprovação do projeto, informamos uma previsão de entrega e instalação. Na maioria dos casos, são de <b>25 a 35 dias úteis</b>.</p></div>
+        </details>
+        <details>
+          <summary>Posso personalizar os móveis de acordo com meu espaço e minhas preferências?<span class="ic" aria-hidden="true"></span></summary>
+          <div class="ans"><p>Sim! Todos os projetos são desenvolvidos de acordo com as dimensões do ambiente, as necessidades do cliente e suas preferências de cores, materiais, acabamentos e funcionalidades.</p></div>
+        </details>
+        <details>
+          <summary>A loja oferece garantia dos móveis planejados?<span class="ic" aria-hidden="true"></span></summary>
+          <div class="ans"><p>Sim! Os móveis possuem garantia conforme as condições estabelecidas no contrato e as especificações dos fabricantes dos componentes utilizados. As condições e os prazos são informados ao cliente durante a contratação.</p></div>
+        </details>
+      </div>
     </div>
   </section>
 
@@ -888,6 +935,7 @@ if (anim) {
   $$(".section-head").forEach(h => gsap.from(h.children, { y: 40, opacity: 0, duration: 1.1, stagger: .1, ease: "expo.out", scrollTrigger: { trigger: h, start: "top 85%" } }));
   gsap.from(".proj", { y: 80, opacity: 0, duration: 1.1, stagger: .07, ease: "expo.out", scrollTrigger: { trigger: "#grid", start: "top 85%" } });
   gsap.from(".pair", { y: 80, opacity: 0, duration: 1.2, stagger: .12, ease: "expo.out", scrollTrigger: { trigger: ".pairs", start: "top 85%" } });
+  gsap.from(".faq details", { y: 40, opacity: 0, duration: 1, stagger: .1, ease: "expo.out", scrollTrigger: { trigger: ".faq__list", start: "top 85%" } });
   gsap.from(".why__grid article", { y: 60, opacity: 0, duration: 1.1, stagger: .1, ease: "expo.out", scrollTrigger: { trigger: ".why__grid", start: "top 85%" } });
   gsap.from(".lead__copy > *, .quiz", { y: 50, opacity: 0, duration: 1.1, stagger: .08, ease: "expo.out", scrollTrigger: { trigger: ".lead", start: "top 75%" } });
   gsap.from(".footer__big", { yPercent: 40, opacity: 0, duration: 1.4, ease: "expo.out", scrollTrigger: { trigger: ".footer", start: "top 90%" } });
@@ -929,6 +977,22 @@ $$("[data-pair]").forEach(p => {
   b2.addEventListener("click", e => { e.stopPropagation(); set(true); });
   p.addEventListener("click", () => set(!p.classList.contains("done")));
   new IntersectionObserver((es, o) => es.forEach(en => { if (en.isIntersecting) { setTimeout(() => set(true), 900); o.disconnect(); } }), { threshold: .6 }).observe(p);
+});
+
+/* perguntas frequentes: abre e fecha com altura animada, uma por vez */
+$$(".faq details").forEach(d => {
+  const sum = d.querySelector("summary"), ans = d.querySelector(".ans");
+  sum.addEventListener("click", e => {
+    e.preventDefault();
+    const opening = !d.open;
+    if (opening) {
+      $$(".faq details[open]").forEach(o => { if (o !== d) o.querySelector("summary").click(); });
+      d.open = true;
+      if (reduce) return;
+      ans.animate([{ height: "0px", opacity: 0 }, { height: ans.scrollHeight + "px", opacity: 1 }], { duration: 450, easing: "cubic-bezier(.2,.8,.2,1)" });
+    } else if (reduce) d.open = false;
+    else ans.animate([{ height: ans.scrollHeight + "px", opacity: 1 }, { height: "0px", opacity: 0 }], { duration: 350, easing: "cubic-bezier(.2,.8,.2,1)" }).onfinish = () => { d.open = false; };
+  });
 });
 
 /* ===== QUIZ ===== */
