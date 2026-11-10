@@ -465,6 +465,35 @@ body { font-weight: 400; font-size: 17px; line-height: 1.75; }
 .nav .brand__word { font-size: 19px; line-height: 1; letter-spacing: .14em; display: flex; flex-direction: column; justify-content: space-between; height: 42px; padding-block: 2px; }
 .nav .brand__word small { margin-top: 0; white-space: nowrap; font-size: 10px; letter-spacing: .16em; }
 @media (max-width: 420px) { .nav .logo-mark { height: 38px; } .nav .brand__word { height: 38px; font-size: 17px; } .nav .brand__word small { font-size: 9px; letter-spacing: .12em; } }
+
+/* ---------- depoimentos: conversa que chega mensagem por mensagem ---------- */
+.talk { background: linear-gradient(180deg, #F5F1EC, #FBF8F4); color: var(--ink); padding-block: clamp(120px, 15vw, 200px); position: relative; overflow: hidden; isolation: isolate; }
+.talk::before { content: ""; position: absolute; z-index: -1; width: 70vw; height: 70vw; left: -25vw; bottom: -35vw; background: radial-gradient(closest-side, rgba(255,140,60,.18), transparent); }
+.talk__wrap { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(40px, 6vw, 100px); align-items: start; }
+.talk .section-head { margin: 0; position: sticky; top: 120px; }
+.talk .section-head .lead-txt { color: var(--muted-light); font-weight: 300; max-width: 28em; }
+.thread { display: grid; gap: 34px; }
+.msg { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px; align-items: end; }
+.msg:nth-child(even) { grid-template-columns: minmax(0, 1fr) 52px; }
+.msg:nth-child(even) .av { order: 2; }
+.av { width: 52px; height: 52px; border-radius: 50%; background: var(--grad); color: #fff; display: grid; place-items: center; font: 500 20px/1 var(--f-display); box-shadow: 0 10px 24px -10px rgba(255,90,20,.6); }
+.bubble { margin: 0; position: relative; background: #fff; border-radius: 28px 28px 28px 8px; padding: 26px 28px 20px; box-shadow: 0 24px 60px -30px rgba(80,40,10,.35), 0 0 0 1px rgba(12,10,9,.05); }
+.msg:nth-child(even) .bubble { border-radius: 28px 28px 8px 28px; }
+.bubble .tag { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px; background: #FFF1E6; color: #C9561A; font: 500 11px/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; }
+.bubble .tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--grad); }
+.bubble p { margin-top: 16px; font: 300 clamp(17px, 1.35vw, 19px)/1.65 var(--f-body); color: #2A2420; }
+.bubble mark { background: linear-gradient(transparent 58%, rgba(255,138,42,.38) 58%) no-repeat 0 0 / 100% 100%; color: var(--ink); font-weight: 600; padding: 0 2px; }
+.bubble .who { margin-top: 18px; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 14px; border-top: 1px solid rgba(12,10,9,.07); }
+.bubble .who b { font: 500 16px/1.2 var(--f-display); }
+.bubble .who small { display: block; font: 400 13px/1.3 var(--f-body); color: var(--muted-light); margin-top: 3px; }
+.ticks { width: 22px; height: 14px; flex: none; }
+.typing { display: none; width: 76px; height: 46px; border-radius: 23px 23px 23px 8px; background: #fff; box-shadow: 0 10px 30px -18px rgba(80,40,10,.4); align-items: center; justify-content: center; gap: 6px; }
+.typing i { width: 8px; height: 8px; border-radius: 50%; background: #C9BFB4; animation: dot 1s infinite ease-in-out; }
+.typing i:nth-child(2) { animation-delay: .15s; } .typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes dot { 0%, 60%, 100% { transform: translateY(0); opacity: .5; } 30% { transform: translateY(-5px); opacity: 1; } }
+.msg:nth-child(even) .typing { border-radius: 23px 23px 8px 23px; margin-left: auto; }
+@media (max-width: 900px) { .talk__wrap { grid-template-columns: minmax(0, 1fr); } .talk .section-head { position: static; } }
+@media (max-width: 560px) { .msg, .msg:nth-child(even) { grid-template-columns: 40px minmax(0, 1fr); } .msg:nth-child(even) .av { order: 0; } .msg:nth-child(even) .bubble { border-radius: 28px 28px 28px 8px; } .msg:nth-child(even) .typing { margin-left: 0; } .av { width: 40px; height: 40px; font-size: 16px; } .bubble { padding: 22px 20px 18px; } }
 </style>
 </head>
 <body>
@@ -644,6 +673,46 @@ body { font-weight: 400; font-size: 17px; line-height: 1.75; }
         <div class="after"><img src="fotos/achiev_foto_08.webp" alt="Parede da TV com gaveteiro entregue" loading="lazy"></div>
         <i class="sweep" aria-hidden="true"></i>
         <div class="pair__ui"><b>Parede da TV e gaveteiro</b><div class="toggle"><button type="button" class="b1 on">Em montagem</button><button type="button" class="b2">Entregue</button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section class="talk" id="depoimentos">
+    <div class="talk__wrap">
+      <div class="section-head">
+        <p class="kicker">Depoimentos</p>
+        <h2 class="h2">Quem planejou com a Achiev, recomenda.</h2>
+        <p class="lead-txt">Mensagens que recebemos dos nossos clientes depois da entrega.</p>
+      </div>
+      <div class="thread" id="thread">
+        <div class="msg">
+          <span class="av" aria-hidden="true">A</span>
+          <div><div class="typing" aria-hidden="true"><i></i><i></i><i></i></div>
+          <blockquote class="bubble">
+            <span class="tag">Entrega rápida</span>
+            <p>Passando aqui só pra agradecer. Os móveis ficaram <mark>prontos em tempo recorde</mark>. Tudo muito bem feito e com excelente qualidade de material, acabamento e montagem. A equipe foi muito profissional. Vou recomendar a empresa de vocês a amigos. Parabéns pelo profissionalismo e comprometimento de todo o time.</p>
+            <footer class="who"><div><b>Alexandre F.</b><small>Cliente Achiev</small></div><svg class="ticks" viewBox="0 0 22 14" role="img" aria-label="Lida"><path d="M1 7.5 5 11.5 13 2.5M8.5 11 9.5 12 18 2.5" fill="none" stroke="url(#og)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></footer>
+          </blockquote></div>
+        </div>
+        <div class="msg">
+          <span class="av" aria-hidden="true">J</span>
+          <div><div class="typing" aria-hidden="true"><i></i><i></i><i></i></div>
+          <blockquote class="bubble">
+            <span class="tag">Casa inteira</span>
+            <p>Passando aqui para agradecer pelo excelente atendimento que recebemos, assim como a qualidade dos móveis entregues. Tudo ocorreu dentro do planejado, <mark>sem nenhum atraso na entrega e na montagem</mark>. Foram móveis de toda a casa. Já estamos recomendando os serviços de vocês. Muito obrigado.</p>
+            <footer class="who"><div><b>João B.</b><small>Móveis para a casa toda</small></div><svg class="ticks" viewBox="0 0 22 14" role="img" aria-label="Lida"><path d="M1 7.5 5 11.5 13 2.5M8.5 11 9.5 12 18 2.5" fill="none" stroke="url(#og)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></footer>
+          </blockquote></div>
+        </div>
+        <div class="msg">
+          <span class="av" aria-hidden="true">C</span>
+          <div><div class="typing" aria-hidden="true"><i></i><i></i><i></i></div>
+          <blockquote class="bubble">
+            <span class="tag">Sob medida</span>
+            <p>Passando pra agradecer pelo trabalho de vocês! Os móveis ficaram muito lindos, de verdade. As medidas ficaram certinhas, aproveitaram super bem cada cantinho e ficou tudo como eu queria. Gostei muito do acabamento, dos detalhes e de como tudo ficou depois de instalado. <mark>Deu outra cara pra minha casa!</mark> Agradeço demais pela condição de pagamento que fizeram pra mim, facilitou bastante pra fechar o projeto.</p>
+            <footer class="who"><div><b>Cliente Achiev</b><small>Projeto sob medida</small></div><svg class="ticks" viewBox="0 0 22 14" role="img" aria-label="Lida"><path d="M1 7.5 5 11.5 13 2.5M8.5 11 9.5 12 18 2.5" fill="none" stroke="url(#og)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></footer>
+          </blockquote></div>
+        </div>
       </div>
     </div>
   </section>
@@ -943,6 +1012,20 @@ if (anim) {
   gsap.from(".proj", { y: 80, opacity: 0, duration: 1.1, stagger: .07, ease: "expo.out", scrollTrigger: { trigger: "#grid", start: "top 85%" } });
   gsap.from(".pair", { y: 80, opacity: 0, duration: 1.2, stagger: .12, ease: "expo.out", scrollTrigger: { trigger: ".pairs", start: "top 85%" } });
   gsap.from(".faq details", { y: 40, opacity: 0, duration: 1, stagger: .1, ease: "expo.out", scrollTrigger: { trigger: ".faq__list", start: "top 85%" } });
+  /* depoimentos: "digitando…" e depois a mensagem, uma de cada vez */
+  const msgs = $$("#thread .msg");
+  gsap.set("#thread .bubble", { opacity: 0, y: 24, scale: .96, transformOrigin: "0% 100%" });
+  const talk = gsap.timeline({ scrollTrigger: { trigger: "#thread", start: "top 75%" } });
+  msgs.forEach((m, i) => {
+    const typing = m.querySelector(".typing"), bubble = m.querySelector(".bubble"), av = m.querySelector(".av");
+    talk.from(av, { scale: 0, duration: .5, ease: "back.out(2)" }, i ? ">-.1" : 0)
+      .set(typing, { display: "flex" }, "<")
+      .from(typing, { scale: .6, opacity: 0, duration: .35, ease: "back.out(2)" }, "<")
+      .to({}, { duration: .7 })
+      .set(typing, { display: "none" })
+      .to(bubble, { opacity: 1, y: 0, scale: 1, duration: .8, ease: "expo.out" })
+      .from(bubble.querySelectorAll("mark"), { backgroundSize: "0% 100%", duration: .6 }, "-=.4");
+  });
   gsap.from(".why__grid article", { y: 60, opacity: 0, duration: 1.1, stagger: .1, ease: "expo.out", scrollTrigger: { trigger: ".why__grid", start: "top 85%" } });
   gsap.from(".lead__copy > *, .quiz", { y: 50, opacity: 0, duration: 1.1, stagger: .08, ease: "expo.out", scrollTrigger: { trigger: ".lead", start: "top 75%" } });
   gsap.from(".footer__big", { yPercent: 40, opacity: 0, duration: 1.4, ease: "expo.out", scrollTrigger: { trigger: ".footer", start: "top 90%" } });
