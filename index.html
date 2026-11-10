@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Achiev Móveis Planejados</title>
 <meta name="description" content="Móveis planejados no Rio Grande do Sul e em Santa Catarina. Solicite gratuitamente seu orçamento pelo WhatsApp.">
+<meta name="format-detection" content="telephone=no">
 <meta name="theme-color" content="#0C0A09">
 <script>if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("js-intro")</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -457,6 +458,13 @@ body { font-weight: 400; font-size: 17px; line-height: 1.75; }
 .faq .ans p { padding: 0 64px 30px 0; color: var(--muted-dark); font-weight: 300; max-width: 46em; }
 .faq .ans b { color: var(--paper); font-weight: 500; }
 @media (max-width: 900px) { .faq__wrap { grid-template-columns: minmax(0, 1fr); } .faq .section-head { position: static; } .faq .ans p { padding-right: 0; } }
+
+/* marca: símbolo da altura do bloco de texto, nome e linha de apoio sempre numa linha cada */
+.nav .brand { gap: 14px; align-items: center; }
+.nav .logo-mark { height: 42px; }
+.nav .brand__word { font-size: 19px; line-height: 1; letter-spacing: .14em; display: flex; flex-direction: column; justify-content: space-between; height: 42px; padding-block: 2px; }
+.nav .brand__word small { margin-top: 0; white-space: nowrap; font-size: 10px; letter-spacing: .16em; }
+@media (max-width: 420px) { .nav .logo-mark { height: 38px; } .nav .brand__word { height: 38px; font-size: 17px; } .nav .brand__word small { font-size: 9px; letter-spacing: .12em; } }
 </style>
 </head>
 <body>
@@ -707,7 +715,6 @@ body { font-weight: 400; font-size: 17px; line-height: 1.75; }
         <li>Projeto pensado para a sua rotina</li>
         <li>Atendimento em RS e SC</li>
       </ul>
-      <p class="lead__wa">WhatsApp (51) 98683-1586</p>
     </div>
 
     <form class="quiz" id="quizForm" novalidate>
