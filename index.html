@@ -507,6 +507,10 @@ body { font-weight: 400; font-size: 17px; line-height: 1.75; }
 .msg:nth-child(even) .typing { border-radius: 23px 23px 8px 23px; margin-left: auto; }
 @media (max-width: 900px) { .talk__wrap { grid-template-columns: minmax(0, 1fr); } .talk .section-head { position: static; } }
 @media (max-width: 560px) { .msg, .msg:nth-child(even) { grid-template-columns: 40px minmax(0, 1fr); } .msg:nth-child(even) .av { order: 0; } .msg:nth-child(even) .bubble { border-radius: 28px 28px 28px 8px; } .msg:nth-child(even) .typing { margin-left: 0; } .av { width: 40px; height: 40px; font-size: 16px; } .bubble { padding: 22px 20px 18px; } }
+
+/* menos vazio entre depoimentos e diferenciais */
+.talk { padding-bottom: clamp(64px, 7vw, 100px); }
+.talk + .why { padding-top: clamp(56px, 6vw, 90px); border-top: 1px solid rgba(12,10,9,.06); }
 </style>
 </head>
 <body>
